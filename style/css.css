@@ -7,6 +7,7 @@ body {
 }
 
 .container {
+  margin: 0 auto;
   max-width: 1240px;
 }
 
@@ -22,6 +23,10 @@ header h1 {
   color: #d04f4f;
   font-size: 36px;
   margin-top: 0;
+}
+
+*:focus {
+  outline: none;
 }
 
 /*main*/
@@ -76,20 +81,50 @@ header h1 {
 .button-bar button img {
   margin-left: 35px;
 }
-
-.ingredientBtn {
+.button-bar input {
+  color: white;
+  width: 90px;
+  height: 67px;
+  border: none;
+}
+.button-bar ::-moz-placeholder {
+  color: white;
+  opacity: 0.5;
+}
+.button-bar :-ms-input-placeholder {
+  color: white;
+  opacity: 0.5;
+}
+.button-bar ::placeholder {
+  color: white;
+  opacity: 0.5;
+}
+.button-bar .ingredientBtn {
+  display: flex;
+  align-items: center;
   background-color: #3282f7;
   color: white;
 }
-
-.appareils {
+.button-bar .ingredientBtn input {
+  background-color: #3282f7;
+}
+.button-bar .appareils {
+  display: flex;
+  align-items: center;
   background-color: #68d9a4;
   color: white;
 }
-
-.ustensiles {
+.button-bar .appareils input {
+  background-color: #68d9a4;
+}
+.button-bar .ustensiles {
+  display: flex;
+  align-items: center;
   background-color: #d04f4f;
   color: white;
+}
+.button-bar .ustensiles input {
+  background-color: #d04f4f;
 }
 
 #grid {

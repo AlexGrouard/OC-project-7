@@ -33,6 +33,7 @@ body {
   margin: 0 50px;
 }
 .container {
+  margin: 0 auto;
   max-width: 1240px;
 }
 header {
@@ -44,6 +45,9 @@ header {
     font-size: 36px;
     margin-top: 0;
   }
+}
+*:focus {
+  outline: none;
 }
 
 /*main*/
@@ -94,20 +98,41 @@ header {
       margin-left: 35px;
     }
   }
+  input {
+    color: $alternate-font-color;
+    width: 90px;
+    height: 67px;
+    border: none;
+  }
+  ::placeholder {
+    color: $alternate-font-color;
+    opacity: 0.5;
+  }
+  .ingredientBtn {
+    @include horizontal-flex();
+    background-color: $secondary;
+    color: $alternate-font-color;
+    input {
+      background-color: $secondary;
+    }
+  }
+  .appareils {
+    @include horizontal-flex();
+    background-color: $tertiary;
+    color: $alternate-font-color;
+    input {
+      background-color: $tertiary;
+    }
+  }
+  .ustensiles {
+    @include horizontal-flex();
+    background-color: $primary;
+    color: $alternate-font-color;
+    input {
+      background-color: $primary;
+    }
+  }
 }
-.ingredientBtn {
-  background-color: $secondary;
-  color: $alternate-font-color;
-}
-.appareils {
-  background-color: $tertiary;
-  color: $alternate-font-color;
-}
-.ustensiles {
-  background-color: $primary;
-  color: $alternate-font-color;
-}
-
 #grid {
   display: flex;
   justify-content: space-between;
