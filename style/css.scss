@@ -84,54 +84,56 @@ header {
   }
 }
 
-/*Button*/
+/*dropdown*/
+//
 .button-bar {
   @include horizontal-flex();
   margin-bottom: 20px;
-  button {
-    @include vertical-flex();
-    width: 170px;
-    height: 69px;
-    border-radius: 5px;
-    border: none;
-    margin-right: 20px;
-    img {
-      margin-left: 35px;
-    }
+}
+button {
+  @include vertical-flex();
+  width: 170px;
+  height: 69px;
+  border-radius: 5px;
+  border: none;
+  margin-right: 20px;
+  &.active .options {
+    display: block;
   }
-  input {
+  .options {
+    display: none;
+    background-color: $secondary;
+    z-index: 1;
+    width: 170px;
+    margin-left: -6px;
+    border-radius: 0 0 5px 5px;
+  }
+}
+.ingredientBtn {
+  background-color: $secondary;
+}
+.appareilsBtn {
+  background-color: $tertiary;
+}
+.ustensilesBtn {
+  background-color: $primary;
+}
+
+.dropdown-visible {
+  @include horizontal-flex();
+  .dropdown-search {
+    background-color: transparent;
     color: $alternate-font-color;
     width: 90px;
-    height: 60px;
+    height: 63px;
     border: none;
   }
   ::placeholder {
     color: $alternate-font-color;
     opacity: 0.5;
   }
-  .ingredientBtn {
-    @include horizontal-flex();
-    background-color: $secondary;
-    color: $alternate-font-color;
-    input {
-      background-color: $secondary;
-    }
-  }
-  .appareils {
-    @include horizontal-flex();
-    background-color: $tertiary;
-    color: $alternate-font-color;
-    input {
-      background-color: $tertiary;
-    }
-  }
-  .ustensiles {
-    @include horizontal-flex();
-    background-color: $primary;
-    color: $alternate-font-color;
-    input {
-      background-color: $primary;
-    }
+  img {
+    margin-left: 35px;
   }
 }
 

@@ -1,8 +1,10 @@
-function show(value) {
-  document.querySelector(".search").value = value;
+function show(value, index) {
+  document.getElementsByClassName(`dropdown-search .${index}`).value = value;
 }
 
-let dropdown = document.querySelector(".dropdown");
-dropdown.onclick = function () {
-  dropdown.classList.toggle("active");
-};
+let dropdown = document.querySelectorAll(".dropdown");
+dropdown.forEach(function (e) {
+  e.onclick = function () {
+    e.classList.toggle("active");
+  };
+});
