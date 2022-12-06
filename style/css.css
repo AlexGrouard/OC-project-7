@@ -65,72 +65,67 @@ header h1 {
   height: 37px;
 }
 
-/*dropdown*/
+/*Button*/
 .button-bar {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 }
 .button-bar button {
+  display: flex;
+  flex-direction: column;
   width: 170px;
   height: 69px;
   border-radius: 5px;
   border: none;
   margin-right: 20px;
 }
-
-.dropdown-visible {
-  display: flex;
-  align-items: center;
-}
-.dropdown-visible input {
-  color: white;
-  width: 90px;
-  height: 65px;
-  border: none;
-}
-.dropdown-visible img {
+.button-bar button img {
   margin-left: 35px;
 }
-.dropdown-visible ::-moz-placeholder {
+.button-bar input {
+  color: white;
+  width: 90px;
+  height: 60px;
+  border: none;
+}
+.button-bar ::-moz-placeholder {
   color: white;
   opacity: 0.5;
 }
-.dropdown-visible :-ms-input-placeholder {
+.button-bar :-ms-input-placeholder {
   color: white;
   opacity: 0.5;
 }
-.dropdown-visible ::placeholder {
+.button-bar ::placeholder {
   color: white;
   opacity: 0.5;
 }
-
-.options {
-  display: block;
-  background-color: #3282f7;
-}
-
-.ingredientBtn {
+.button-bar .ingredientBtn {
+  display: flex;
+  align-items: center;
   background-color: #3282f7;
   color: white;
 }
-.ingredientBtn input {
+.button-bar .ingredientBtn input {
   background-color: #3282f7;
 }
-
-.appareils {
+.button-bar .appareils {
+  display: flex;
+  align-items: center;
   background-color: #68d9a4;
   color: white;
 }
-.appareils input {
+.button-bar .appareils input {
   background-color: #68d9a4;
 }
-
-.ustensiles {
+.button-bar .ustensiles {
+  display: flex;
+  align-items: center;
   background-color: #d04f4f;
   color: white;
 }
-.ustensiles input {
+.button-bar .ustensiles input {
   background-color: #d04f4f;
 }
 

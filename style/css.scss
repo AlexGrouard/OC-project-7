@@ -89,6 +89,7 @@ header {
   @include horizontal-flex();
   margin-bottom: 20px;
   button {
+    @include vertical-flex();
     width: 170px;
     height: 69px;
     border-radius: 5px;
@@ -101,7 +102,7 @@ header {
   input {
     color: $alternate-font-color;
     width: 90px;
-    height: 67px;
+    height: 60px;
     border: none;
   }
   ::placeholder {
