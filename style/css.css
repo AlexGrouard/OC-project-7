@@ -89,22 +89,31 @@ button.active img {
 }
 button .options {
   display: none;
-  background-color: #3282f7;
   z-index: 1;
   width: 170px;
   margin-left: -6px;
   border-radius: 0 0 5px 5px;
+  color: white;
 }
 
 .ingredientBtn {
+  background-color: #3282f7;
+}
+.ingredientBtn .options {
   background-color: #3282f7;
 }
 
 .appareilsBtn {
   background-color: #68d9a4;
 }
+.appareilsBtn .options {
+  background-color: #68d9a4;
+}
 
 .ustensilesBtn {
+  background-color: #d04f4f;
+}
+.ustensilesBtn .options {
   background-color: #d04f4f;
 }
 
@@ -164,6 +173,9 @@ button .options {
   align-items: center;
   justify-content: space-around;
 }
+.card-title h2 {
+  max-width: 50%;
+}
 .card-title .timer {
   display: flex;
   align-items: center;
@@ -190,4 +202,6 @@ button .options {
 }
 .card-content .recette {
   width: 50%;
+  height: 130px;
+  overflow: auto;
 }/*# sourceMappingURL=css.css.map */

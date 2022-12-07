@@ -105,21 +105,30 @@ button {
   }
   .options {
     display: none;
-    background-color: $secondary;
     z-index: 1;
     width: 170px;
     margin-left: -6px;
     border-radius: 0 0 5px 5px;
+    color: $alternate-font-color;
   }
 }
 .ingredientBtn {
   background-color: $secondary;
+  .options {
+    background-color: $secondary;
+  }
 }
 .appareilsBtn {
   background-color: $tertiary;
+  .options {
+    background-color: $tertiary;
+  }
 }
 .ustensilesBtn {
   background-color: $primary;
+  .options {
+    background-color: $primary;
+  }
 }
 
 .dropdown-visible {
@@ -163,6 +172,9 @@ button {
 .card-title {
   @include horizontal-flex();
   justify-content: space-around;
+  h2 {
+    max-width: calc(50%);
+  }
   .timer {
     @include horizontal-flex();
     font-weight: bold;
@@ -186,5 +198,7 @@ button {
   }
   .recette {
     width: calc(50%);
+    height: 130px;
+    overflow: auto;
   }
 }
