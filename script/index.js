@@ -1,5 +1,5 @@
-function show(value, index) {
-  document.getElementsByClassName(`dropdown-search .${index}`).value = value;
+function show(value, id) {
+  document.querySelector(`#${id}`).value = value;
 }
 
 let dropdown = document.querySelectorAll(".dropdown");
