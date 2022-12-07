@@ -84,6 +84,9 @@ button {
 button.active .options {
   display: block;
 }
+button.active img {
+  transform: rotate(-180deg);
+}
 button .options {
   display: none;
   background-color: #3282f7;
@@ -130,6 +133,7 @@ button .options {
 }
 .dropdown-visible img {
   margin-left: 35px;
+  transition: 0.5s;
 }
 
 #grid {
