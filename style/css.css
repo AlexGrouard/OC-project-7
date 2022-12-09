@@ -81,16 +81,27 @@ button {
   border: none;
   margin-right: 20px;
 }
+button.active {
+  width: 667px;
+}
 button.active .options {
   display: block;
+  width: 667px;
 }
-button.active img {
+button.active .dropdownBtn {
+  transform: rotate(-180deg);
+  margin-left: 525px;
+}
+button.inputSearch .options {
+  display: block;
+  width: 170px;
+}
+button.inputSearch .dropdownBtn {
   transform: rotate(-180deg);
 }
 button .options {
   display: none;
   z-index: 1;
-  width: 170px;
   margin-left: -6px;
   border-radius: 0 0 5px 5px;
   color: white;
@@ -140,9 +151,8 @@ button .options {
   color: white;
   opacity: 0.5;
 }
-.dropdown-visible img {
+.dropdown-visible .dropdownBtn {
   margin-left: 35px;
-  transition: 0.5s;
 }
 
 #grid {
@@ -174,7 +184,7 @@ button .options {
   justify-content: space-around;
 }
 .card-title h2 {
-  max-width: 50%;
+  max-width: 90%;
 }
 .card-title .timer {
   display: flex;
@@ -190,6 +200,9 @@ button .options {
 .card-title .timer div {
   padding-top: 2px;
 }
+.card-title .timer .timer-min {
+  margin-left: 5px;
+}
 
 .card-content {
   display: flex;
@@ -201,7 +214,10 @@ button .options {
   width: 50%;
 }
 .card-content .recette {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 7;
   width: 50%;
-  height: 130px;
-  overflow: auto;
+  height: 50%;
+  overflow: hidden;
 }/*# sourceMappingURL=css.css.map */

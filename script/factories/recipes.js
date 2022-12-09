@@ -29,10 +29,17 @@ function recipesFeactory(data) {
     const divTime = document.createElement("div");
     divTime.textContent = time;
 
+    const divMin = document.createElement("div");
+    divMin.setAttribute("class", "timer-min");
+    divMin.textContent = " min";
+
     const divContent = document.createElement("div");
     divContent.setAttribute("class", "card-content");
 
     const ul = document.createElement("ul");
+    let index = id;
+    console.log(data);
+    //ingredientFactory(index, data);
 
     const divRecette = document.createElement("div");
     divRecette.setAttribute("class", "recette");
@@ -44,7 +51,8 @@ function recipesFeactory(data) {
     divTitle.appendChild(h2);
     divTitle.appendChild(divTimer);
     divTimer.appendChild(imgTimer);
-    imgTimer.appendChild(divTime);
+    divTimer.appendChild(divTime);
+    divTimer.appendChild(divMin);
     divDescription.appendChild(divContent);
     divContent.appendChild(ul);
     divContent.appendChild(divRecette);

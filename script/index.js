@@ -15,16 +15,19 @@ function show(value, id) {
   document.querySelector(`#${id}`).value = value;
 }
 
-let dropdown = document.querySelectorAll(".dropdown");
-dropdown.forEach(function (e) {
-  e.onclick = function () {
-    e.classList.toggle("active");
-  };
-});
+function toggleClass(el, name) {
+  let selector = document.querySelectorAll(el);
+  selector.forEach((e) => {
+    e.onclick = function () {
+      e.parentElement.parentElement.classList.toggle(name);
+    };
+  });
+}
 
 async function init() {
   const { recipes } = await getData();
   displayRecipes(recipes);
 }
-
+toggleClass(".dropdown-search", "inputSearch");
+toggleClass(".dropdownBtn", "active");
 init();

@@ -97,16 +97,27 @@ button {
   border-radius: 5px;
   border: none;
   margin-right: 20px;
+  &.active {
+    width: 667px;
+  }
   &.active .options {
     display: block;
+    width: 667px;
   }
-  &.active img {
+  &.active .dropdownBtn {
+    transform: rotate(-180deg);
+    margin-left: 525px;
+  }
+  &.inputSearch .options {
+    display: block;
+    width: 170px;
+  }
+  &.inputSearch .dropdownBtn {
     transform: rotate(-180deg);
   }
   .options {
     display: none;
     z-index: 1;
-    width: 170px;
     margin-left: -6px;
     border-radius: 0 0 5px 5px;
     color: $alternate-font-color;
@@ -144,9 +155,8 @@ button {
     color: $alternate-font-color;
     opacity: 0.5;
   }
-  img {
+  .dropdownBtn {
     margin-left: 35px;
-    transition: 0.5s;
   }
 }
 
@@ -173,7 +183,7 @@ button {
   @include horizontal-flex();
   justify-content: space-around;
   h2 {
-    max-width: calc(50%);
+    max-width: calc(90%);
   }
   .timer {
     @include horizontal-flex();
@@ -187,6 +197,9 @@ button {
     div {
       padding-top: 2px;
     }
+    .timer-min {
+      margin-left: 5px;
+    }
   }
 }
 .card-content {
@@ -197,8 +210,11 @@ button {
     width: calc(50%);
   }
   .recette {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 7;
     width: calc(50%);
-    height: 130px;
-    overflow: auto;
+    height: 50%;
+    overflow: hidden;
   }
 }
