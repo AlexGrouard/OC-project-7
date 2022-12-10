@@ -167,7 +167,7 @@ button .options {
   margin-bottom: 50px;
   border: 1px solid #e7e7e7;
   border-radius: 5px;
-  font-size: small;
+  font-size: 12px;
   height: 380px;
   width: 380px;
 }
@@ -181,10 +181,12 @@ button .options {
 .card-title {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 .card-title h2 {
-  max-width: 90%;
+  max-width: 70%;
+  margin-left: 20px;
+  font-weight: 400;
 }
 .card-title .timer {
   display: flex;
@@ -212,6 +214,13 @@ button .options {
 .card-content ul {
   list-style: none;
   width: 50%;
+  padding-left: 20px;
+}
+.card-content li {
+  display: flex;
+}
+.card-content li .card-ingredient {
+  font-weight: bold;
 }
 .card-content .recette {
   display: -webkit-box;

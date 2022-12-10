@@ -37,9 +37,30 @@ function recipesFeactory(data) {
     divContent.setAttribute("class", "card-content");
 
     const ul = document.createElement("ul");
-    let index = id;
-    console.log(data);
-    //ingredientFactory(index, data);
+
+    // for each ingredient list, create a new li element and check if the unit is present if unit is present print it.
+    for (let i = 0; i < data.ingredients.length; i++) {
+      const li = document.createElement("li");
+      const divIngredient = document.createElement("div");
+      divIngredient.setAttribute("class", "card-ingredient");
+      divIngredient.textContent = data.ingredients[i].ingredient + " : ";
+      const divQuantity = document.createElement("div");
+      if (JSON.stringify(data.ingredients[i].unit) == undefined) {
+        divQuantity.textContent = data.ingredients[i].quantity;
+      } else {
+        if (data.ingredients[i].unit === "grammes") {
+          divQuantity.textContent = data.ingredients[i].quantity + "g";
+        } else if (data.ingredients[i].unit === "cuillères à soupe") {
+          divQuantity.textContent = data.ingredients[i].quantity + " cuillères";
+        } else {
+          divQuantity.textContent =
+            data.ingredients[i].quantity + data.ingredients[i].unit;
+        }
+      }
+      ul.appendChild(li);
+      li.appendChild(divIngredient);
+      li.appendChild(divQuantity);
+    }
 
     const divRecette = document.createElement("div");
     divRecette.setAttribute("class", "recette");
