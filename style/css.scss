@@ -99,21 +99,25 @@ button {
   margin-right: 20px;
   &.active {
     width: 667px;
+    .dropdown-search {
+      width: 580px;
+    }
+    .options {
+      display: block;
+      width: 667px;
+      max-height: 397px;
+    }
+    .dropdownBtn {
+      transform: rotate(-180deg);
+    }
   }
-  &.active .options {
-    display: block;
-    width: 667px;
-  }
-  &.active .dropdownBtn {
-    transform: rotate(-180deg);
-    margin-left: 525px;
-  }
-  &.inputSearch .options {
-    display: block;
-    width: 170px;
-  }
-  &.inputSearch .dropdownBtn {
-    transform: rotate(-180deg);
+  &.inputSearch {
+    .options {
+      width: 170px;
+    }
+    .dropdownBtn {
+      transform: rotate(-180deg);
+    }
   }
   .options {
     display: none;
@@ -123,19 +127,19 @@ button {
     color: $alternate-font-color;
   }
 }
-.ingredientBtn {
+#IngredientsBtn {
   background-color: $secondary;
   .options {
     background-color: $secondary;
   }
 }
-.appareilsBtn {
+#AppareilsBtn {
   background-color: $tertiary;
   .options {
     background-color: $tertiary;
   }
 }
-.ustensilesBtn {
+#UstensilesBtn {
   background-color: $primary;
   .options {
     background-color: $primary;
