@@ -27,56 +27,49 @@ async function sorting(recipes) {
   ingredientArray = Array.from(new Set(ingredientArray));
   appliancesArray = Array.from(new Set(appliancesArray));
   ustensilsArray = Array.from(new Set(ustensilsArray));
-  localStorage.setItem("Ingredients", JSON.stringify(ingredientArray));
-  localStorage.setItem("Appareils", JSON.stringify(appliancesArray));
-  localStorage.setItem("Ustensiles", JSON.stringify(ustensilsArray));
-  displaySubmenu();
+  displaySubmenu(ingredientArray, appliancesArray, ustensilsArray);
 }
-// async function addTags(recipes) {
-//   const tagBar = document.querySelector(".tag-bar");
-//   recipes.forEach((recipes) => {
-//     const tagModel = sortingFactory(recipes);
-//     const tagsCardDOM = tagModel.getTagDOM();
-//     tagBar.appendChild(tagsCardDOM);
-//   });
-// }
-async function displaySubmenu() {
+
+async function displaySubmenu(
+  ingredientArray,
+  appliancesArray,
+  ustensilsArray
+) {
   const buttonBar = document.querySelector(".button-bar");
-  const ingredients = JSON.parse(localStorage.getItem("Ingredients"));
-  const appliances = JSON.parse(localStorage.getItem("Appareils"));
-  const ustensils = JSON.parse(localStorage.getItem("Ustensiles"));
-  const submenuModelIngredient = submenuFactory(ingredients, "Ingredients");
+  // create the 3 different submenu
+  const submenuModelIngredient = submenuFactory(ingredientArray, "Ingredients");
   const submenuDOMingredient = submenuModelIngredient.submenuDOM();
-  const submenuModelAppliances = submenuFactory(appliances, "Appareils");
+  const submenuModelAppliances = submenuFactory(appliancesArray, "Appareils");
   const submenuDOMappliances = submenuModelAppliances.submenuDOM();
-  const submenuModelUstensils = submenuFactory(ustensils, "Ustensiles");
+  const submenuModelUstensils = submenuFactory(ustensilsArray, "Ustensiles");
   const submenuDOMustensils = submenuModelUstensils.submenuDOM();
+  // append the submenu
   buttonBar.appendChild(submenuDOMingredient);
   buttonBar.appendChild(submenuDOMappliances);
   buttonBar.appendChild(submenuDOMustensils);
+  // add the toggle to the button
   toggleClass(".dropdown-search", "inputSearch");
   toggleClass(".dropdownBtn", "active");
 }
 
 function show(value, id) {
   document.querySelector(`#${id}`).value = value;
+  addTags(value, id);
 }
 
 function toggleClass(el, name) {
   let selector = document.querySelectorAll(el);
-  if (
-    document.querySelector(".active") ||
-    document.querySelector(".inputSearch")
-  ) {
-    el.classList.toggle("active");
-    el.classList.toggle("inputSearch");
-  } else {
-    selector.forEach((e) => {
+  selector.forEach((e) => {
+    if (name == "close") {
+      e.onclick = function () {
+        e.parentElement.classList.toggle(name);
+      };
+    } else {
       e.onclick = function () {
         e.parentElement.parentElement.classList.toggle(name);
       };
-    });
-  }
+    }
+  });
 }
 
 async function init() {

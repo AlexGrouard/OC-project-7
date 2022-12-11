@@ -57,12 +57,30 @@ header h1 {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background-color: #3282f7;
   color: white;
   border-radius: 5px;
   font-size: 14px;
-  width: 107px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   height: 37px;
+  margin-right: 20px;
+  padding: 0 10px;
+}
+.tag-bar .tag img {
+  padding: 0 10px;
+}
+.tag-bar .Itag {
+  background-color: #3282f7;
+}
+.tag-bar .Atag {
+  background-color: #68d9a4;
+}
+.tag-bar .Utag {
+  background-color: #d04f4f;
+}
+.tag-bar .close {
+  display: none;
 }
 
 /*dropdown*/
@@ -75,7 +93,6 @@ header h1 {
 button {
   display: flex;
   flex-direction: column;
-  width: 170px;
   height: 69px;
   border-radius: 5px;
   border: none;
@@ -88,7 +105,9 @@ button.active .dropdown-search {
   width: 580px;
 }
 button.active .options {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   width: 667px;
   max-height: 397px;
 }
@@ -107,6 +126,12 @@ button .options {
   margin-left: -6px;
   border-radius: 0 0 5px 5px;
   color: white;
+  text-align: left;
+}
+button .options div {
+  width: calc(33% - 20px);
+  margin-bottom: 10px;
+  margin-left: 10px;
 }
 
 #IngredientsBtn {
@@ -133,28 +158,28 @@ button .options {
 .dropdown-visible {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 .dropdown-visible .dropdown-search {
   background-color: transparent;
   color: white;
-  width: 90px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   height: 63px;
   border: none;
 }
 .dropdown-visible ::-moz-placeholder {
   color: white;
-  opacity: 0.5;
 }
 .dropdown-visible :-ms-input-placeholder {
   color: white;
-  opacity: 0.5;
 }
 .dropdown-visible ::placeholder {
   color: white;
-  opacity: 0.5;
 }
 .dropdown-visible .dropdownBtn {
-  margin-left: 35px;
+  margin-right: 10px;
 }
 
 #grid {

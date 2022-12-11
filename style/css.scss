@@ -75,12 +75,28 @@ header {
   .tag {
     @include horizontal-flex();
     justify-content: space-around;
-    background-color: $secondary;
     color: $alternate-font-color;
     border-radius: 5px;
     font-size: 14px;
-    width: 107px;
+    width: fit-content;
     height: 37px;
+    margin-right: 20px;
+    padding: 0 10px;
+    img {
+      padding: 0 10px;
+    }
+  }
+  .Itag {
+    background-color: $secondary;
+  }
+  .Atag {
+    background-color: $tertiary;
+  }
+  .Utag {
+    background-color: $primary;
+  }
+  .close {
+    display: none;
   }
 }
 
@@ -92,7 +108,7 @@ header {
 }
 button {
   @include vertical-flex();
-  width: 170px;
+
   height: 69px;
   border-radius: 5px;
   border: none;
@@ -103,7 +119,9 @@ button {
       width: 580px;
     }
     .options {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
       width: 667px;
       max-height: 397px;
     }
@@ -125,6 +143,12 @@ button {
     margin-left: -6px;
     border-radius: 0 0 5px 5px;
     color: $alternate-font-color;
+    text-align: left;
+    div {
+      width: calc(33% - 20px);
+      margin-bottom: 10px;
+      margin-left: 10px;
+    }
   }
 }
 #IngredientsBtn {
@@ -148,19 +172,19 @@ button {
 
 .dropdown-visible {
   @include horizontal-flex();
+  justify-content: space-between;
   .dropdown-search {
     background-color: transparent;
     color: $alternate-font-color;
-    width: 90px;
+    width: fit-content;
     height: 63px;
     border: none;
   }
   ::placeholder {
     color: $alternate-font-color;
-    opacity: 0.5;
   }
   .dropdownBtn {
-    margin-left: 35px;
+    margin-right: 10px;
   }
 }
 
