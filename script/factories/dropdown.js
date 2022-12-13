@@ -1,7 +1,7 @@
-function submenuFactory(data, name) {
-  const { ingredent } = data;
+function dropdownFactory(data, name) {
+  //const { ingredent } = data;
 
-  function submenuDOM() {
+  function dropdownDOM() {
     const button = document.createElement("button");
     button.type = "button";
     button.classList.add("dropdown");
@@ -20,6 +20,13 @@ function submenuFactory(data, name) {
     img.classList.add("dropdownBtn");
     img.src = "./assets/images/arrow-down.svg";
 
+    button.appendChild(divDropdown);
+    divDropdown.appendChild(input);
+    divDropdown.appendChild(img);
+    submenuDOM(button, data);
+    return button;
+  }
+  function submenuDOM(button, data) {
     const divOptions = document.createElement("div");
     divOptions.classList.add("options");
 
@@ -29,13 +36,8 @@ function submenuFactory(data, name) {
       div.textContent = ingredient;
       divOptions.appendChild(div);
     }
-
-    button.appendChild(divDropdown);
-    divDropdown.appendChild(input);
-    divDropdown.appendChild(img);
     button.appendChild(divOptions);
-
     return button;
   }
-  return { ingredent, submenuDOM };
+  return { data, dropdownDOM, submenuDOM };
 }

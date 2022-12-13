@@ -40,16 +40,19 @@ async function displaySubmenu(
 ) {
   const buttonBar = document.querySelector(".button-bar");
   // create the 3 different submenu
-  const submenuModelIngredient = submenuFactory(ingredientArray, "Ingredients");
-  const submenuDOMingredient = submenuModelIngredient.submenuDOM();
-  const submenuModelAppliances = submenuFactory(appliancesArray, "Appareils");
-  const submenuDOMappliances = submenuModelAppliances.submenuDOM();
-  const submenuModelUstensils = submenuFactory(ustensilsArray, "Ustensiles");
-  const submenuDOMustensils = submenuModelUstensils.submenuDOM();
+  const dropdownModelIngredient = dropdownFactory(
+    ingredientArray,
+    "Ingredients"
+  );
+  const dropdownDOMingredient = dropdownModelIngredient.dropdownDOM();
+  const dropdownModelAppliances = dropdownFactory(appliancesArray, "Appareils");
+  const dropdownDOMappliances = dropdownModelAppliances.dropdownDOM();
+  const dropdownModelUstensils = dropdownFactory(ustensilsArray, "Ustensiles");
+  const dropdownDOMustensils = dropdownModelUstensils.dropdownDOM();
   // append the submenu
-  buttonBar.appendChild(submenuDOMingredient);
-  buttonBar.appendChild(submenuDOMappliances);
-  buttonBar.appendChild(submenuDOMustensils);
+  buttonBar.appendChild(dropdownDOMingredient);
+  buttonBar.appendChild(dropdownDOMappliances);
+  buttonBar.appendChild(dropdownDOMustensils);
   // add the toggle to the button
   toggleClass(".dropdown-search", "inputSearch");
   toggleClass(".dropdownBtn", "active");
@@ -79,34 +82,70 @@ function toggleClass(el, name) {
 
 function inputListening() {
   const dropdownSearch = document.querySelectorAll(".dropdown-search");
-  const Ingredients = localStorage.getItem("ingredients");
+  let Ingredients = localStorage.getItem("ingredients");
+  let Appareils = localStorage.getItem("appareils");
+  let Ustensiles = localStorage.getItem("ustensiles");
   Ingredients = JSON.parse(Ingredients);
+  Appareils = JSON.parse(Appareils);
+  Ustensiles = JSON.parse(Ustensiles);
+
   dropdownSearch.forEach((search) => {
     search.addEventListener("input", () =>
-      autoComplete(search.value, search.id, Ingredients)
+      autoComplete(search.value, search.id, Ingredients, Appareils, Ustensiles)
     );
   });
 }
 
-function autoComplete(value, id, Ingredients) {
-  const regex = new RegExp(`^${value}`);
+function autoComplete(value, id, Ingredients, Appareils, Ustensiles) {
+  const buttonBar = document.querySelector(".button-bar");
+  const button = buttonBar.querySelector(`#${id}` + "Btn");
+  const dropdownModelIngredient = dropdownFactory(Ingredients, "Ingredients");
+  const dropdownModelAppliances = dropdownFactory(Appareils, "Appareils");
+  const dropdownModelUstensils = dropdownFactory(Ustensiles, "Ustensiles");
+  const regex = new RegExp(`${value}`);
   switch (id) {
     case "Ingredients":
-      let match = Ingredients.match(regex);
-      console.log(match);
-      break;
+      let Imatch = Ingredients.filter((e) => e.match(regex));
+      // const submenuDOMingredient = dropdownModelIngredient.submenuDOM(
+      //   button,
+      //   Imatch
+      // );
+      // buttonBar.appendChild(submenuDOMingredient);
+      console.log(Imatch);
+      return Imatch;
     case "Appareils":
-      break;
+      let Amatch = Appareils.filter((e) => e.match(regex));
+      return Amatch;
     case "Ustensiles":
-      break;
+      let Umatch = Ustensiles.filter((e) => e.match(regex));
+      return Umatch;
   }
+}
+
+async function menuState() {
+  const dropdown = document.querySelectorAll(".dropdown");
+  dropdown.forEach((submenu) => {
+    const alreadyActive = submenu.querySelector(".active.inputSearch");
+    const alreadyInput = submenu.querySelector(".inputSearch.active");
+    submenu.addEventListener("click", () => {
+      // console.log(alreadyActive);
+      // console.log(alreadyInput);
+      if (alreadyActive === true) {
+        console.log("recipes already active");
+        alreadyActive.classList.remove("active");
+      }
+      if (alreadyInput) {
+        console.log("recipes already input");
+        alreadyInput.classList.remove("inputSearch");
+      }
+    });
+  });
 }
 
 async function init() {
   const { recipes } = await getData();
-
   displayRecipes(recipes);
   sorting(recipes);
-  // listen for any input on the dropdown
+  menuState();
 }
 init();
