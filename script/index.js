@@ -125,17 +125,13 @@ function autoComplete(value, id, Ingredients, Appareils, Ustensiles) {
 async function menuState() {
   const dropdown = document.querySelectorAll(".dropdown");
   dropdown.forEach((submenu) => {
-    const alreadyActive = submenu.querySelector(".active.inputSearch");
-    const alreadyInput = submenu.querySelector(".inputSearch.active");
     submenu.addEventListener("click", () => {
-      // console.log(alreadyActive);
-      // console.log(alreadyInput);
-      if (alreadyActive === true) {
-        console.log("recipes already active");
+      const alreadyActive = document.querySelector(".active.inputSearch");
+      const alreadyInput = document.querySelector(".inputSearch.active");
+      if (alreadyActive) {
         alreadyActive.classList.remove("active");
       }
       if (alreadyInput) {
-        console.log("recipes already input");
         alreadyInput.classList.remove("inputSearch");
       }
     });
