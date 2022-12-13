@@ -27,6 +27,9 @@ async function sorting(recipes) {
   ingredientArray = Array.from(new Set(ingredientArray));
   appliancesArray = Array.from(new Set(appliancesArray));
   ustensilsArray = Array.from(new Set(ustensilsArray));
+  localStorage.setItem("ingredients", JSON.stringify(ingredientArray));
+  localStorage.setItem("appareils", JSON.stringify(appliancesArray));
+  localStorage.setItem("ustensiles", JSON.stringify(ustensilsArray));
   displaySubmenu(ingredientArray, appliancesArray, ustensilsArray);
 }
 
@@ -50,6 +53,8 @@ async function displaySubmenu(
   // add the toggle to the button
   toggleClass(".dropdown-search", "inputSearch");
   toggleClass(".dropdownBtn", "active");
+
+  inputListening();
 }
 
 function show(value, id) {
@@ -72,10 +77,36 @@ function toggleClass(el, name) {
   });
 }
 
-async function init() {
-  const { recipes } = await getData();
-  displayRecipes(recipes);
-  sorting(recipes);
+function inputListening() {
+  const dropdownSearch = document.querySelectorAll(".dropdown-search");
+  const Ingredients = localStorage.getItem("ingredients");
+  Ingredients = JSON.parse(Ingredients);
+  dropdownSearch.forEach((search) => {
+    search.addEventListener("input", () =>
+      autoComplete(search.value, search.id, Ingredients)
+    );
+  });
 }
 
+function autoComplete(value, id, Ingredients) {
+  const regex = new RegExp(`^${value}`);
+  switch (id) {
+    case "Ingredients":
+      let match = Ingredients.match(regex);
+      console.log(match);
+      break;
+    case "Appareils":
+      break;
+    case "Ustensiles":
+      break;
+  }
+}
+
+async function init() {
+  const { recipes } = await getData();
+
+  displayRecipes(recipes);
+  sorting(recipes);
+  // listen for any input on the dropdown
+}
 init();
