@@ -17,11 +17,11 @@ async function sorting(recipes) {
   let ustensilsArray = [];
   recipes.forEach((recipes) => {
     for (let i = 0; i < recipes.ingredients.length; i++) {
-      ingredientArray.push(recipes.ingredients[i].ingredient);
+      ingredientArray.push(recipes.ingredients[i].ingredient.toLowerCase());
     }
-    appliancesArray.push(recipes.appliance);
+    appliancesArray.push(recipes.appliance.toLowerCase());
     for (let i = 0; i < recipes.ustensils.length; i++) {
-      ustensilsArray.push(recipes.ustensils[i]);
+      ustensilsArray.push(recipes.ustensils[i].toLowerCase());
     }
   });
   ingredientArray = Array.from(new Set(ingredientArray));
@@ -30,10 +30,26 @@ async function sorting(recipes) {
   localStorage.setItem("ingredients", JSON.stringify(ingredientArray));
   localStorage.setItem("appareils", JSON.stringify(appliancesArray));
   localStorage.setItem("ustensiles", JSON.stringify(ustensilsArray));
-  displaySubmenu(ingredientArray, appliancesArray, ustensilsArray);
+  displayDropdown(ingredientArray, appliancesArray, ustensilsArray);
 }
 
-async function displaySubmenu(
+async function menuState() {
+  const dropdown = document.querySelectorAll(".dropdown");
+  dropdown.forEach((submenu) => {
+    submenu.addEventListener("click", () => {
+      const alreadyActive = document.querySelector(".active.inputSearch");
+      const alreadyInput = document.querySelector(".inputSearch.active");
+      if (alreadyActive) {
+        alreadyActive.classList.remove("active");
+      }
+      if (alreadyInput) {
+        alreadyInput.classList.remove("inputSearch");
+      }
+    });
+  });
+}
+
+async function displayDropdown(
   ingredientArray,
   appliancesArray,
   ustensilsArray
@@ -58,11 +74,6 @@ async function displaySubmenu(
   toggleClass(".dropdownBtn", "active");
 
   inputListening();
-}
-
-function show(value, id) {
-  document.querySelector(`#${id}`).value = value;
-  addTags(value, id);
 }
 
 function toggleClass(el, name) {
@@ -97,45 +108,43 @@ function inputListening() {
 }
 
 function autoComplete(value, id, Ingredients, Appareils, Ustensiles) {
+  value = value.toLowerCase();
   const buttonBar = document.querySelector(".button-bar");
   const button = buttonBar.querySelector(`#${id}` + "Btn");
-  const dropdownModelIngredient = dropdownFactory(Ingredients, "Ingredients");
-  const dropdownModelAppliances = dropdownFactory(Appareils, "Appareils");
-  const dropdownModelUstensils = dropdownFactory(Ustensiles, "Ustensiles");
+  const options = button.querySelector(".options");
   const regex = new RegExp(`${value}`);
+
   switch (id) {
     case "Ingredients":
+      if (options.hasChildNodes()) {
+        options.remove();
+      }
       let Imatch = Ingredients.filter((e) => e.match(regex));
-      // const submenuDOMingredient = dropdownModelIngredient.submenuDOM(
-      //   button,
-      //   Imatch
-      // );
-      // buttonBar.appendChild(submenuDOMingredient);
-      console.log(Imatch);
+      submenuDOM(button, Imatch, id);
+      //console.log(Imatch);
       return Imatch;
     case "Appareils":
+      if (options.hasChildNodes()) {
+        options.remove();
+      }
       let Amatch = Appareils.filter((e) => e.match(regex));
+      submenuDOM(button, Amatch, id);
+      //console.log(Amatch);
       return Amatch;
     case "Ustensiles":
+      if (options.hasChildNodes()) {
+        options.remove();
+      }
       let Umatch = Ustensiles.filter((e) => e.match(regex));
+      submenuDOM(button, Umatch, id);
+      //console.log(Umatch);
       return Umatch;
   }
 }
 
-async function menuState() {
-  const dropdown = document.querySelectorAll(".dropdown");
-  dropdown.forEach((submenu) => {
-    submenu.addEventListener("click", () => {
-      const alreadyActive = document.querySelector(".active.inputSearch");
-      const alreadyInput = document.querySelector(".inputSearch.active");
-      if (alreadyActive) {
-        alreadyActive.classList.remove("active");
-      }
-      if (alreadyInput) {
-        alreadyInput.classList.remove("inputSearch");
-      }
-    });
-  });
+function show(value, id) {
+  document.querySelector(`#${id}`).value = value;
+  addTags(value, id);
 }
 
 async function init() {

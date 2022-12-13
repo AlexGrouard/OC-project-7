@@ -131,6 +131,7 @@ button {
   }
   &.inputSearch {
     .options {
+      display: block;
       width: 170px;
     }
     .dropdownBtn {

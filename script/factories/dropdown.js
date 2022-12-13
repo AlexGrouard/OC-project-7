@@ -1,6 +1,4 @@
 function dropdownFactory(data, name) {
-  //const { ingredent } = data;
-
   function dropdownDOM() {
     const button = document.createElement("button");
     button.type = "button";
@@ -23,21 +21,8 @@ function dropdownFactory(data, name) {
     button.appendChild(divDropdown);
     divDropdown.appendChild(input);
     divDropdown.appendChild(img);
-    submenuDOM(button, data);
+    submenuDOM(button, data, name);
     return button;
   }
-  function submenuDOM(button, data) {
-    const divOptions = document.createElement("div");
-    divOptions.classList.add("options");
-
-    for (let ingredient of data) {
-      const div = document.createElement("div");
-      div.setAttribute("onclick", `show('${ingredient}','${name}')`);
-      div.textContent = ingredient;
-      divOptions.appendChild(div);
-    }
-    button.appendChild(divOptions);
-    return button;
-  }
-  return { data, dropdownDOM, submenuDOM };
+  return { data, dropdownDOM };
 }
