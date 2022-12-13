@@ -5,7 +5,7 @@ $tertiary: #68d9a4;
 $background-secondary: #e7e7e7;
 $background-primary: white;
 $alternate-font-color: white;
-$title-font: "DM sans";
+$title-font: 'DM sans';
 
 /*mixin*/
 @mixin vertical-center-flex {
@@ -29,7 +29,7 @@ $title-font: "DM sans";
 }
 /*global*/
 body {
-  font-family: "Lato";
+  font-family: 'Lato';
   margin: 0 50px;
 }
 .container {

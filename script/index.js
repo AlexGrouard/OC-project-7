@@ -1,9 +1,9 @@
 async function getData() {
-  return await fetch("./data/recipes.json").then((response) => response.json());
+  return await fetch('./data/recipes.json').then((response) => response.json());
 }
 
 async function displayRecipes(recipes) {
-  const grid = document.querySelector("#grid");
+  const grid = document.querySelector('#grid');
   recipes.forEach((recipes) => {
     const recipeModel = recipesFeactory(recipes);
     const recipesCardDOM = recipeModel.getCardDOM();
@@ -27,23 +27,23 @@ async function sorting(recipes) {
   ingredientArray = Array.from(new Set(ingredientArray));
   appliancesArray = Array.from(new Set(appliancesArray));
   ustensilsArray = Array.from(new Set(ustensilsArray));
-  localStorage.setItem("ingredients", JSON.stringify(ingredientArray));
-  localStorage.setItem("appareils", JSON.stringify(appliancesArray));
-  localStorage.setItem("ustensiles", JSON.stringify(ustensilsArray));
+  localStorage.setItem('ingredients', JSON.stringify(ingredientArray));
+  localStorage.setItem('appareils', JSON.stringify(appliancesArray));
+  localStorage.setItem('ustensiles', JSON.stringify(ustensilsArray));
   displayDropdown(ingredientArray, appliancesArray, ustensilsArray);
 }
 
 async function menuState() {
-  const dropdown = document.querySelectorAll(".dropdown");
+  const dropdown = document.querySelectorAll('.dropdown');
   dropdown.forEach((submenu) => {
-    submenu.addEventListener("click", () => {
-      const alreadyActive = document.querySelector(".active.inputSearch");
-      const alreadyInput = document.querySelector(".inputSearch.active");
+    submenu.addEventListener('click', () => {
+      const alreadyActive = document.querySelector('.active.inputSearch');
+      const alreadyInput = document.querySelector('.inputSearch.active');
       if (alreadyActive) {
-        alreadyActive.classList.remove("active");
+        alreadyActive.classList.remove('active');
       }
       if (alreadyInput) {
-        alreadyInput.classList.remove("inputSearch");
+        alreadyInput.classList.remove('inputSearch');
       }
     });
   });
@@ -54,24 +54,24 @@ async function displayDropdown(
   appliancesArray,
   ustensilsArray
 ) {
-  const buttonBar = document.querySelector(".button-bar");
+  const buttonBar = document.querySelector('.button-bar');
   // create the 3 different submenu
   const dropdownModelIngredient = dropdownFactory(
     ingredientArray,
-    "Ingredients"
+    'Ingredients'
   );
   const dropdownDOMingredient = dropdownModelIngredient.dropdownDOM();
-  const dropdownModelAppliances = dropdownFactory(appliancesArray, "Appareils");
+  const dropdownModelAppliances = dropdownFactory(appliancesArray, 'Appareils');
   const dropdownDOMappliances = dropdownModelAppliances.dropdownDOM();
-  const dropdownModelUstensils = dropdownFactory(ustensilsArray, "Ustensiles");
+  const dropdownModelUstensils = dropdownFactory(ustensilsArray, 'Ustensiles');
   const dropdownDOMustensils = dropdownModelUstensils.dropdownDOM();
   // append the submenu
   buttonBar.appendChild(dropdownDOMingredient);
   buttonBar.appendChild(dropdownDOMappliances);
   buttonBar.appendChild(dropdownDOMustensils);
   // add the toggle to the button
-  toggleClass(".dropdown-search", "inputSearch");
-  toggleClass(".dropdownBtn", "active");
+  toggleClass('.dropdown-search', 'inputSearch');
+  toggleClass('.dropdownBtn', 'active');
 
   inputListening();
 }
@@ -79,29 +79,29 @@ async function displayDropdown(
 function toggleClass(el, name) {
   let selector = document.querySelectorAll(el);
   selector.forEach((e) => {
-    if (name == "close") {
-      e.onclick = function () {
+    if (name == 'close') {
+      e.addEventListener('click', () => {
         e.parentElement.classList.toggle(name);
-      };
+      });
     } else {
-      e.onclick = function () {
+      e.addEventListener('click', () => {
         e.parentElement.parentElement.classList.toggle(name);
-      };
+      });
     }
   });
 }
 
 function inputListening() {
-  const dropdownSearch = document.querySelectorAll(".dropdown-search");
-  let Ingredients = localStorage.getItem("ingredients");
-  let Appareils = localStorage.getItem("appareils");
-  let Ustensiles = localStorage.getItem("ustensiles");
+  const dropdownSearch = document.querySelectorAll('.dropdown-search');
+  let Ingredients = localStorage.getItem('ingredients');
+  let Appareils = localStorage.getItem('appareils');
+  let Ustensiles = localStorage.getItem('ustensiles');
   Ingredients = JSON.parse(Ingredients);
   Appareils = JSON.parse(Appareils);
   Ustensiles = JSON.parse(Ustensiles);
 
   dropdownSearch.forEach((search) => {
-    search.addEventListener("input", () =>
+    search.addEventListener('input', () =>
       autoComplete(search.value, search.id, Ingredients, Appareils, Ustensiles)
     );
   });
@@ -109,32 +109,26 @@ function inputListening() {
 
 function autoComplete(value, id, Ingredients, Appareils, Ustensiles) {
   value = value.toLowerCase();
-  const buttonBar = document.querySelector(".button-bar");
-  const button = buttonBar.querySelector(`#${id}` + "Btn");
-  const options = button.querySelector(".options");
+  const buttonBar = document.querySelector('.button-bar');
+  const button = buttonBar.querySelector(`#${id}` + 'Btn');
+  const options = button.querySelector('.options');
   const regex = new RegExp(`${value}`);
 
   switch (id) {
-    case "Ingredients":
-      if (options.hasChildNodes()) {
-        options.remove();
-      }
+    case 'Ingredients':
+      options.remove();
       let Imatch = Ingredients.filter((e) => e.match(regex));
       submenuDOM(button, Imatch, id);
       //console.log(Imatch);
       return Imatch;
-    case "Appareils":
-      if (options.hasChildNodes()) {
-        options.remove();
-      }
+    case 'Appareils':
+      options.remove();
       let Amatch = Appareils.filter((e) => e.match(regex));
       submenuDOM(button, Amatch, id);
       //console.log(Amatch);
       return Amatch;
-    case "Ustensiles":
-      if (options.hasChildNodes()) {
-        options.remove();
-      }
+    case 'Ustensiles':
+      options.remove();
       let Umatch = Ustensiles.filter((e) => e.match(regex));
       submenuDOM(button, Umatch, id);
       //console.log(Umatch);
@@ -145,6 +139,7 @@ function autoComplete(value, id, Ingredients, Appareils, Ustensiles) {
 function show(value, id) {
   document.querySelector(`#${id}`).value = value;
   addTags(value, id);
+  //document.querySelector(`#${id}`).value = "";
 }
 
 async function init() {
