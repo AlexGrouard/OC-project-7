@@ -51,7 +51,8 @@ header h1 {
 .tag-bar {
   display: flex;
   align-items: center;
-  margin: 20px 0;
+  flex-wrap: wrap;
+  margin: 10px 0;
 }
 .tag-bar .tag {
   display: flex;
@@ -65,6 +66,7 @@ header h1 {
   width: fit-content;
   height: 37px;
   margin-right: 20px;
+  margin-top: 10px;
   padding: 0 10px;
 }
 .tag-bar .tag img {
@@ -106,10 +108,10 @@ button.active .dropdown-search {
 }
 button.active .options {
   display: flex;
-  flex-direction: column;
   flex-wrap: wrap;
+  justify-content: space-between;
   width: 667px;
-  max-height: 397px;
+  height: 397px;
 }
 button.active .dropdownBtn {
   transform: rotate(-180deg);

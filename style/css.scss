@@ -71,7 +71,8 @@ header {
 /*tag*/
 .tag-bar {
   @include horizontal-flex();
-  margin: 20px 0;
+  flex-wrap: wrap;
+  margin: 10px 0;
   .tag {
     @include horizontal-flex();
     justify-content: space-around;
@@ -81,6 +82,7 @@ header {
     width: fit-content;
     height: 37px;
     margin-right: 20px;
+    margin-top: 10px;
     padding: 0 10px;
     img {
       padding: 0 10px;
@@ -101,14 +103,12 @@ header {
 }
 
 /*dropdown*/
-//
 .button-bar {
   @include horizontal-flex();
   margin-bottom: 20px;
 }
 button {
   @include vertical-flex();
-
   height: 69px;
   border-radius: 5px;
   border: none;
@@ -120,10 +120,10 @@ button {
     }
     .options {
       display: flex;
-      flex-direction: column;
       flex-wrap: wrap;
+      justify-content: space-between;
       width: 667px;
-      max-height: 397px;
+      height: 397px;
     }
     .dropdownBtn {
       transform: rotate(-180deg);
@@ -174,6 +174,7 @@ button {
 .dropdown-visible {
   @include horizontal-flex();
   justify-content: space-between;
+
   .dropdown-search {
     background-color: transparent;
     color: $alternate-font-color;
