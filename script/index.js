@@ -1,13 +1,15 @@
 var ingredientArray = [];
 var appliancesArray = [];
 var ustensilsArray = [];
+const searchInput = document.querySelector('.search');
+const tag = document.querySelectorAll('.tag');
+const grid = document.querySelector('#grid');
 
 async function getData() {
   return await fetch('./data/recipes.json').then((response) => response.json());
 }
 
 async function displayRecipes(recipes) {
-  const grid = document.querySelector('#grid');
   recipes.forEach((recipes) => {
     const recipeModel = recipesFeactory(recipes);
     const recipesCardDOM = recipeModel.getCardDOM();
@@ -30,14 +32,13 @@ async function sorting(recipes) {
   ustensilsArray = Array.from(new Set(ustensilsArray));
   displayDropdown(ingredientArray, appliancesArray, ustensilsArray);
 }
-
+// TODO: find a way to handle closing the dropdown when clicking outside of the dropdown
 async function menuState() {
   const dropdown = document.querySelectorAll('.dropdown');
   const input = document.querySelectorAll('.input');
   dropdown.forEach((submenu) => {
     submenu.addEventListener('click', () => {
       const active = document.querySelectorAll('.active');
-      console.log(active);
       const alreadyActive = document.querySelector('.active.inputSearch');
       const alreadyInput = document.querySelector('.inputSearch.active');
       // if (active.length > 1) {
@@ -148,7 +149,36 @@ async function autoComplete(
 async function show(value, id) {
   document.querySelector(`#${id}`).value = value;
   addTags(value, id);
+  algo(value);
   //document.querySelector(`#${id}`).value = "";
+}
+
+async function algo(value) {
+  const { recipes } = await getData();
+  const regex = new RegExp(`${value}`);
+  let fullResult = [];
+  recipes.forEach((recipe) => {
+    for (el of recipe.ingredients) {
+      let oneIngredient = el.ingredient.toLowerCase();
+      let result = oneIngredient.find((e) => e.match(regex));
+      console.log(result);
+      if (result.length > 0) {
+        fullResult.push(recipe);
+      }
+    }
+  });
+  grid.removeChild();
+  displayRecipes(fullResult);
+  // recipes.forEach((recipe) => {
+  //   for (el of recipe.ingredients) {
+  //     console.log(el);
+  //     if (el.ingredient.toLowerCase() === value.toLowerCase()) {
+  //       console.log('equal');
+  //       grid.removeChild();
+  //       displayRecipes(recipe);
+  //     }
+  //   }
+  // });
 }
 
 async function init() {
@@ -158,3 +188,9 @@ async function init() {
   menuState();
 }
 init();
+
+searchInput.addEventListener('input', () => {
+  if (searchInput.value.length > 2) {
+    algo(searchInput.value);
+  }
+});
