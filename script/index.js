@@ -1,6 +1,7 @@
 var ingredientArray = [];
 var appliancesArray = [];
 var ustensilsArray = [];
+var fullResult = [];
 const searchInput = document.querySelector('.search');
 const tag = document.querySelectorAll('.tag');
 const grid = document.querySelector('#grid');
@@ -85,7 +86,8 @@ async function toggleClass(el, name) {
   selector.forEach((e) => {
     if (name == 'close') {
       e.addEventListener('click', () => {
-        e.parentElement.classList.toggle(name);
+        removeFromSearch(e.parentElement.textContent)
+        e.parentElement.remove()
       });
     } else {
       e.addEventListener('click', () => {
@@ -97,7 +99,6 @@ async function toggleClass(el, name) {
 
 async function inputListening() {
   const dropdownSearch = document.querySelectorAll('.dropdown-search');
-
   dropdownSearch.forEach((search) => {
     search.addEventListener('input', () =>
       autoComplete(
@@ -129,19 +130,16 @@ async function autoComplete(
       options.remove();
       let Imatch = ingredientArray.filter((e) => e.match(regex));
       submenuDOM(button, Imatch, id);
-      //console.log(Imatch);
       return Imatch;
     case 'Appareils':
       options.remove();
       let Amatch = appliancesArray.filter((e) => e.match(regex));
       submenuDOM(button, Amatch, id);
-      //console.log(Amatch);
       return Amatch;
     case 'Ustensiles':
       options.remove();
       let Umatch = ustensilsArray.filter((e) => e.match(regex));
       submenuDOM(button, Umatch, id);
-      //console.log(Umatch);
       return Umatch;
   }
 }
@@ -156,8 +154,7 @@ async function show(value, id) {
 async function algo(value) {
   const { recipes } = await getData();
   const regex = new RegExp(`${value}`);
-  let fullResult = [];
-  console.log(value)
+  // go through each recipe to find a match in Ingredients, name of the recipe, appliances or utensils
   recipes.forEach((recipe) => {
     if (recipe.name.toLowerCase().match(regex) || recipe.appliance.toLowerCase().match(regex)) {
       fullResult.push(recipe);
@@ -166,29 +163,18 @@ async function algo(value) {
     if (ingredientArr.ingredient.toLowerCase().match(regex)) {
       fullResult.push(recipe);
     }})
-    // for (el of recipe.ingredients) {
-    //   let oneIngredient = el.ingredient.toLowerCase();
-    //   console.log(oneIngredient);
-    //   let result = oneIngredient.filter((e) => e.match(regex));
-    //   console.log(result);
-    //   if (result.length > 0) {
-    //     fullResult.push(recipe);
-    //   }
-    // }
+    recipe.ustensils.forEach((ustensilsArr) => {
+      if (ustensilsArr.toLowerCase().match(regex)) {
+        fullResult.push(recipe);
+    }})
   });
+  //remove duplicates
+  fullResult = Array.from(new Set(fullResult))
+  //clean up the page
   grid.replaceChildren();
   displayRecipes(fullResult);
-  // recipes.forEach((recipe) => {
-  //   for (el of recipe.ingredients) {
-  //     console.log(el);
-  //     if (el.ingredient.toLowerCase() === value.toLowerCase()) {
-  //       console.log('equal');
-  //       grid.removeChild();
-  //       displayRecipes(recipe);
-  //     }
-  //   }
-  // });
 }
+
 
 async function init() {
   const { recipes } = await getData();
@@ -200,9 +186,12 @@ init();
 
 searchInput.addEventListener('input', () => {
   if (searchInput.value.length > 2) {
-    algo(searchInput.value);
+    algo(searchInput.value.toLowerCase());
   }
   else {
+    document.querySelector('.button-bar').replaceChildren()
+    document.querySelector('.tag-bar').replaceChildren()
+    grid.replaceChildren()
     init();
   }
 });
