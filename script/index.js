@@ -157,17 +157,26 @@ async function algo(value) {
   const { recipes } = await getData();
   const regex = new RegExp(`${value}`);
   let fullResult = [];
+  console.log(value)
   recipes.forEach((recipe) => {
-    for (el of recipe.ingredients) {
-      let oneIngredient = el.ingredient.toLowerCase();
-      let result = oneIngredient.find((e) => e.match(regex));
-      console.log(result);
-      if (result.length > 0) {
-        fullResult.push(recipe);
-      }
+    if (recipe.name.toLowerCase().match(regex) || recipe.appliance.toLowerCase().match(regex)) {
+      fullResult.push(recipe);
     }
+    recipe.ingredients.forEach((ingredientArr) => {
+    if (ingredientArr.ingredient.toLowerCase().match(regex)) {
+      fullResult.push(recipe);
+    }})
+    // for (el of recipe.ingredients) {
+    //   let oneIngredient = el.ingredient.toLowerCase();
+    //   console.log(oneIngredient);
+    //   let result = oneIngredient.filter((e) => e.match(regex));
+    //   console.log(result);
+    //   if (result.length > 0) {
+    //     fullResult.push(recipe);
+    //   }
+    // }
   });
-  grid.removeChild();
+  grid.replaceChildren();
   displayRecipes(fullResult);
   // recipes.forEach((recipe) => {
   //   for (el of recipe.ingredients) {
@@ -192,5 +201,8 @@ init();
 searchInput.addEventListener('input', () => {
   if (searchInput.value.length > 2) {
     algo(searchInput.value);
+  }
+  else {
+    init();
   }
 });
