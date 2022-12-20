@@ -86,7 +86,7 @@ async function toggleClass(el, name) {
   selector.forEach((e) => {
     if (name == 'close') {
       e.addEventListener('click', () => {
-        removeFromSearch(e.parentElement.textContent)
+        algo(e.parentElement.textContent,'remove')
         e.parentElement.remove()
       });
     } else {
@@ -147,33 +147,52 @@ async function autoComplete(
 async function show(value, id) {
   document.querySelector(`#${id}`).value = value;
   addTags(value, id);
-  algo(value);
-  //document.querySelector(`#${id}`).value = "";
+  algo(value,'add');
 }
 
-async function algo(value) {
+//Algo with match function
+async function algo(value,toggle) {
   const { recipes } = await getData();
   const regex = new RegExp(`${value}`);
+  let removeResult = []
+  let index
   // go through each recipe to find a match in Ingredients, name of the recipe, appliances or utensils
   recipes.forEach((recipe) => {
     if (recipe.name.toLowerCase().match(regex) || recipe.appliance.toLowerCase().match(regex)) {
-      fullResult.push(recipe);
-    }
+      if (toggle == 'remove'){
+        index = fullResult.indexOf(recipe)
+        console.log(index)
+        removeResult = fullResult.splice(index,1)
+      } else {fullResult.push(recipe)} 
     recipe.ingredients.forEach((ingredientArr) => {
     if (ingredientArr.ingredient.toLowerCase().match(regex)) {
-      fullResult.push(recipe);
+      if (toggle == 'remove'){
+        index = fullResult.indexOf(recipe)
+        removeResult = fullResult.splice(index,1)
+      } else {fullResult.push(recipe)} 
     }})
     recipe.ustensils.forEach((ustensilsArr) => {
       if (ustensilsArr.toLowerCase().match(regex)) {
-        fullResult.push(recipe);
+        if (toggle == 'remove'){
+          index = fullResult.indexOf(recipe)
+          removeResult = fullResult.splice(index,1)
+        } else {fullResult.push(recipe)} 
     }})
-  });
+  }});
   //remove duplicates
   fullResult = Array.from(new Set(fullResult))
-  //clean up the page
-  grid.replaceChildren();
-  displayRecipes(fullResult);
-}
+  if (fullResult.length === 0) {
+    document.querySelector('.button-bar').replaceChildren()
+    document.querySelector('.tag-bar').replaceChildren()
+    grid.replaceChildren()
+    init();
+  }
+  else {
+    //clean up the page
+    grid.replaceChildren();
+    displayRecipes(fullResult);
+  }
+  }
 
 
 async function init() {
@@ -186,7 +205,7 @@ init();
 
 searchInput.addEventListener('input', () => {
   if (searchInput.value.length > 2) {
-    algo(searchInput.value.toLowerCase());
+    algo(searchInput.value.toLowerCase(),'add');
   }
   else {
     document.querySelector('.button-bar').replaceChildren()
