@@ -2,7 +2,6 @@ var ingredientArray = [];
 var appliancesArray = [];
 var ustensilsArray = [];
 const searchInput = document.querySelector('.search');
-const tag = document.querySelectorAll('.tag');
 const grid = document.querySelector('#grid');
 
 async function getData() {
@@ -151,8 +150,8 @@ async function show(value, id) {
 
 //Algo with loop
 async function algo(value, toggle) {
-  value = value.toLowerCase();
   const { recipes } = await getData();
+  const tag = document.querySelectorAll('.tag');
   let fullResult = [];
   // go through each recipe to find a match in Ingredients, name of the recipe, appliances or utensils
   for (let recipe of recipes) {
@@ -188,10 +187,15 @@ async function algo(value, toggle) {
   //clean up the page
   grid.replaceChildren();
   displayRecipes(fullResult);
-  // when tag close remove the keyword from the results
 
-  //IF tag bar is empty after a search then call init
-  //if
+  // if (tag.length === 0) {
+  //   //remove the keyword from the results
+  // } else {
+  //   document.querySelector('.button-bar').replaceChildren();
+  //   document.querySelector('.tag-bar').replaceChildren();
+  //   grid.replaceChildren();
+  //   init();
+  // }
 }
 
 async function init() {
