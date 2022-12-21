@@ -84,8 +84,8 @@ async function toggleClass(el, name) {
   selector.forEach((e) => {
     if (name == 'close') {
       e.addEventListener('click', () => {
-        algo(e.parentElement.textContent, 'remove');
         e.parentElement.remove();
+        algo();
       });
     } else {
       e.addEventListener('click', () => {
@@ -145,39 +145,43 @@ async function autoComplete(
 async function show(value, id) {
   document.querySelector(`#${id}`).value = value;
   addTags(value, id);
-  algo(value, 'add');
+  algo();
 }
 
 //Algo with loop
-async function algo(value, toggle) {
+async function algo() {
+  const value = searchInput.value;
   const { recipes } = await getData();
-  const tag = document.querySelectorAll('.tag');
+  const tags = document.querySelectorAll('.tag');
+  let tagArray = [];
   let fullResult = [];
+  for (let tag of tags) {
+    tagArray.push(tag.textContent);
+  }
+
   // go through each recipe to find a match in Ingredients, name of the recipe, appliances or utensils
   for (let recipe of recipes) {
-    let words = recipe.name.toLowerCase().split(' ');
-    for (let el of words) {
-      if (el == value) {
-        console.log('catched recipe name');
+    if (
+      recipe.name.toLowerCase().includes(value) ||
+      recipe.description.toLowerCase().includes(value)
+    ) {
+      fullResult.push(recipe);
+    }
+
+    for (let ingredientArr of recipe.ingredients) {
+      if (ingredientArr.ingredient.toLowerCase().includes(value)) {
         fullResult.push(recipe);
       }
     }
-    if (recipe.appliance.toLowerCase() === value) {
-      console.log('catched appliance');
-      fullResult.push(recipe);
-    }
-    for (let ingredientArr of recipe.ingredients) {
-      let words = ingredientArr.ingredient.toLowerCase().split(' ');
-      for (let el of words) {
-        if (el === value) {
-          console.log('catched ingredient');
+    for (let valueTag of tagArray) {
+      console.log(valueTag);
+      for (let utensils of recipe.ustensils) {
+        if (utensils.toLowerCase().includes(valueTag)) {
           fullResult.push(recipe);
         }
       }
-    }
-    for (let utensils of recipe.ustensils) {
-      if (utensils.toLowerCase() === value) {
-        console.log('catched ustensils');
+      if (recipe.appliance.toLowerCase().includes(valueTag)) {
+        console.log(recipe.appliance);
         fullResult.push(recipe);
       }
     }
@@ -187,15 +191,6 @@ async function algo(value, toggle) {
   //clean up the page
   grid.replaceChildren();
   displayRecipes(fullResult);
-
-  // if (tag.length === 0) {
-  //   //remove the keyword from the results
-  // } else {
-  //   document.querySelector('.button-bar').replaceChildren();
-  //   document.querySelector('.tag-bar').replaceChildren();
-  //   grid.replaceChildren();
-  //   init();
-  // }
 }
 
 async function init() {
@@ -208,7 +203,7 @@ init();
 
 searchInput.addEventListener('input', () => {
   if (searchInput.value.length > 2) {
-    algo(searchInput.value.toLowerCase(), 'add');
+    algo();
   } else {
     document.querySelector('.button-bar').replaceChildren();
     document.querySelector('.tag-bar').replaceChildren();
