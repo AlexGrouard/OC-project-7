@@ -1,7 +1,6 @@
 var ingredientArray = [];
 var appliancesArray = [];
 var ustensilsArray = [];
-var fullResult = [];
 const searchInput = document.querySelector('.search');
 const tag = document.querySelectorAll('.tag');
 const grid = document.querySelector('#grid');
@@ -86,8 +85,8 @@ async function toggleClass(el, name) {
   selector.forEach((e) => {
     if (name == 'close') {
       e.addEventListener('click', () => {
-        algo(e.parentElement.textContent,'remove')
-        e.parentElement.remove()
+        algo(e.parentElement.textContent, 'remove');
+        e.parentElement.remove();
       });
     } else {
       e.addEventListener('click', () => {
@@ -147,53 +146,53 @@ async function autoComplete(
 async function show(value, id) {
   document.querySelector(`#${id}`).value = value;
   addTags(value, id);
-  algo(value,'add');
+  algo(value, 'add');
 }
 
-//Algo with match function
-async function algo(value,toggle) {
+//Algo with loop
+async function algo(value, toggle) {
+  value = value.toLowerCase();
   const { recipes } = await getData();
-  const regex = new RegExp(`${value}`);
-  let removeResult = []
-  let index
+  let fullResult = [];
   // go through each recipe to find a match in Ingredients, name of the recipe, appliances or utensils
-  recipes.forEach((recipe) => {
-    if (recipe.name.toLowerCase().match(regex) || recipe.appliance.toLowerCase().match(regex)) {
-      if (toggle == 'remove'){
-        index = fullResult.indexOf(recipe)
-        console.log(index)
-        removeResult = fullResult.splice(index,1)
-      } else {fullResult.push(recipe)} 
-    recipe.ingredients.forEach((ingredientArr) => {
-    if (ingredientArr.ingredient.toLowerCase().match(regex)) {
-      if (toggle == 'remove'){
-        index = fullResult.indexOf(recipe)
-        removeResult = fullResult.splice(index,1)
-      } else {fullResult.push(recipe)} 
-    }})
-    recipe.ustensils.forEach((ustensilsArr) => {
-      if (ustensilsArr.toLowerCase().match(regex)) {
-        if (toggle == 'remove'){
-          index = fullResult.indexOf(recipe)
-          removeResult = fullResult.splice(index,1)
-        } else {fullResult.push(recipe)} 
-    }})
-  }});
+  for (let recipe of recipes) {
+    let words = recipe.name.toLowerCase().split(' ');
+    for (let el of words) {
+      if (el == value) {
+        console.log('catched recipe name');
+        fullResult.push(recipe);
+      }
+    }
+    if (recipe.appliance.toLowerCase() === value) {
+      console.log('catched appliance');
+      fullResult.push(recipe);
+    }
+    for (let ingredientArr of recipe.ingredients) {
+      let words = ingredientArr.ingredient.toLowerCase().split(' ');
+      for (let el of words) {
+        if (el === value) {
+          console.log('catched ingredient');
+          fullResult.push(recipe);
+        }
+      }
+    }
+    for (let utensils of recipe.ustensils) {
+      if (utensils.toLowerCase() === value) {
+        console.log('catched ustensils');
+        fullResult.push(recipe);
+      }
+    }
+  }
   //remove duplicates
-  fullResult = Array.from(new Set(fullResult))
-  if (fullResult.length === 0) {
-    document.querySelector('.button-bar').replaceChildren()
-    document.querySelector('.tag-bar').replaceChildren()
-    grid.replaceChildren()
-    init();
-  }
-  else {
-    //clean up the page
-    grid.replaceChildren();
-    displayRecipes(fullResult);
-  }
-  }
+  fullResult = Array.from(new Set(fullResult));
+  //clean up the page
+  grid.replaceChildren();
+  displayRecipes(fullResult);
+  // when tag close remove the keyword from the results
 
+  //IF tag bar is empty after a search then call init
+  //if
+}
 
 async function init() {
   const { recipes } = await getData();
@@ -205,12 +204,11 @@ init();
 
 searchInput.addEventListener('input', () => {
   if (searchInput.value.length > 2) {
-    algo(searchInput.value.toLowerCase(),'add');
-  }
-  else {
-    document.querySelector('.button-bar').replaceChildren()
-    document.querySelector('.tag-bar').replaceChildren()
-    grid.replaceChildren()
+    algo(searchInput.value.toLowerCase(), 'add');
+  } else {
+    document.querySelector('.button-bar').replaceChildren();
+    document.querySelector('.tag-bar').replaceChildren();
+    grid.replaceChildren();
     init();
   }
 });
