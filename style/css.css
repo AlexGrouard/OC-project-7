@@ -100,20 +100,20 @@ button {
   border: none;
   margin-right: 20px;
 }
-button.active {
+button.active, button.active.inputSearch {
   width: 667px;
 }
-button.active .dropdown-search {
+button.active .dropdown-search, button.active.inputSearch .dropdown-search {
   width: 580px;
 }
-button.active .options {
+button.active .options, button.active.inputSearch .options {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   width: 667px;
   height: 397px;
 }
-button.active .dropdownBtn {
+button.active .dropdownBtn, button.active.inputSearch .dropdownBtn {
   transform: rotate(-180deg);
 }
 button.inputSearch .options {

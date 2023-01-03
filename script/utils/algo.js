@@ -1,23 +1,23 @@
 //Algo with match function
-async function algo(value, toggle) {
+async function algo(value) {
   const { recipes } = await getData();
-  const regex = new RegExp(`${value}`);
+  const tags = document.querySelectorAll('.tag');
   let fullResult = [];
-  // go through each recipe to find a match in Ingredients, name of the recipe, appliances or utensils
   recipes.forEach((recipe) => {
     if (
-      recipe.name.toLowerCase().match(regex) ||
-      recipe.appliance.toLowerCase().match(regex)
+      recipe.name.toLowerCase().includes(value) ||
+      recipe.description.toLowerCase().includes(value) ||
+      recipe.appliance.toLowerCase().includes(value)
     ) {
       fullResult.push(recipe);
     }
     recipe.ingredients.forEach((ingredientArr) => {
-      if (ingredientArr.ingredient.toLowerCase().match(regex)) {
+      if (ingredientArr.ingredient.toLowerCase().includes(value)) {
         fullResult.push(recipe);
       }
     });
     recipe.ustensils.forEach((ustensilsArr) => {
-      if (ustensilsArr.toLowerCase().match(regex)) {
+      if (ustensilsArr.toLowerCase().includes(value)) {
         fullResult.push(recipe);
       }
     });
@@ -27,6 +27,4 @@ async function algo(value, toggle) {
   //clean up the page
   grid.replaceChildren();
   displayRecipes(fullResult);
-
-  //for tags utliser some()
 }

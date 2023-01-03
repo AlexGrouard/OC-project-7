@@ -113,7 +113,7 @@ button {
   border-radius: 5px;
   border: none;
   margin-right: 20px;
-  &.active {
+  &.active, &.active.inputSearch {
     width: 667px;
     .dropdown-search {
       width: 580px;

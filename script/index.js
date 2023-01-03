@@ -3,6 +3,7 @@ var appliancesArray = [];
 var ustensilsArray = [];
 const searchInput = document.querySelector('.search');
 const grid = document.querySelector('#grid');
+const buttonBar = document.querySelector('.button-bar');
 
 async function getData() {
   return await fetch('./data/recipes.json').then((response) => response.json());
@@ -17,13 +18,13 @@ async function displayRecipes(recipes) {
 }
 
 async function sorting(recipes) {
-  recipes.forEach((recipes) => {
-    for (let i = 0; i < recipes.ingredients.length; i++) {
-      ingredientArray.push(recipes.ingredients[i].ingredient.toLowerCase());
+  recipes.forEach((recipe) => {
+    for (let i = 0; i < recipe.ingredients.length; i++) {
+      ingredientArray.push(recipe.ingredients[i].ingredient.toLowerCase());
     }
-    appliancesArray.push(recipes.appliance.toLowerCase());
-    for (let i = 0; i < recipes.ustensils.length; i++) {
-      ustensilsArray.push(recipes.ustensils[i].toLowerCase());
+    appliancesArray.push(recipe.appliance.toLowerCase());
+    for (let i = 0; i < recipe.ustensils.length; i++) {
+      ustensilsArray.push(recipe.ustensils[i].toLowerCase());
     }
   });
   ingredientArray = Array.from(new Set(ingredientArray));
@@ -31,33 +32,12 @@ async function sorting(recipes) {
   ustensilsArray = Array.from(new Set(ustensilsArray));
   displayDropdown(ingredientArray, appliancesArray, ustensilsArray);
 }
-// TODO: find a way to handle closing the dropdown when clicking outside of the dropdown
-async function menuState() {
-  const dropdown = document.querySelectorAll('.dropdown');
-  const input = document.querySelectorAll('.input');
-  dropdown.forEach((submenu) => {
-    submenu.addEventListener('click', () => {
-      const active = document.querySelectorAll('.active');
-      const alreadyActive = document.querySelector('.active.inputSearch');
-      const alreadyInput = document.querySelector('.inputSearch.active');
-      // if (active.length > 1) {
-      //   document.querySelector('.active').classList.toggle('active');
-      // } else {
-      //   document.querySelector('.active').classList.add('active');
-      // }
-      if (alreadyInput) {
-        alreadyInput.classList.remove('inputSearch');
-      }
-    });
-  });
-}
 
 async function displayDropdown(
   ingredientArray,
   appliancesArray,
   ustensilsArray
 ) {
-  const buttonBar = document.querySelector('.button-bar');
   // create the 3 different submenu
   const dropdownModelIngredient = dropdownFactory(
     ingredientArray,
@@ -148,7 +128,6 @@ async function show(value, id) {
   algo();
 }
 
-//Algo with loop
 async function algo() {
   const value = searchInput.value;
   const { recipes } = await getData();
@@ -158,47 +137,69 @@ async function algo() {
   for (let tag of tags) {
     tagArray.push(tag.textContent);
   }
-
   // go through each recipe to find a match in Ingredients, name of the recipe, appliances or utensils
   for (let recipe of recipes) {
-    if (
-      recipe.name.toLowerCase().includes(value) ||
-      recipe.description.toLowerCase().includes(value)
-    ) {
-      fullResult.push(recipe);
-    }
-
-    for (let ingredientArr of recipe.ingredients) {
-      if (ingredientArr.ingredient.toLowerCase().includes(value)) {
+    //if something is input is the research bar
+    if (value) {
+      if (
+        recipe.name.toLowerCase().includes(value) ||
+        recipe.description.toLowerCase().includes(value) ||
+        recipe.appliance.toLowerCase().includes(value)
+      ) {
         fullResult.push(recipe);
       }
-    }
-    for (let valueTag of tagArray) {
-      console.log(valueTag);
-      for (let utensils of recipe.ustensils) {
-        if (utensils.toLowerCase().includes(valueTag)) {
+      for (let ingredientArr of recipe.ingredients) {
+        if (ingredientArr.ingredient.toLowerCase().includes(value)) {
           fullResult.push(recipe);
         }
       }
-      if (recipe.appliance.toLowerCase().includes(valueTag)) {
-        console.log(recipe.appliance);
-        fullResult.push(recipe);
+      for (let utensilsArr of recipe.ustensils) {
+        if (utensilsArr.toLowerCase().includes(value)) {
+          fullResult.push(recipe);
+        }
+      }
+    }
+    // if tags is added or removed
+    if (tagArray.length > 0) {
+      for (let tag of tagArray) {
+        if (
+          recipe.name.toLowerCase().includes(tag) ||
+          recipe.description.toLowerCase().includes(tag) ||
+          recipe.appliance.toLowerCase().includes(tag)
+        ) {
+          fullResult.push(recipe);
+        }
+        for (let ingredientArr of recipe.ingredients) {
+          if (ingredientArr.ingredient.toLowerCase().includes(tag)) {
+            fullResult.push(recipe);
+          }
+        }
+        for (let utensilsArr of recipe.ustensils) {
+          if (utensilsArr.toLowerCase().includes(tag)) {
+            fullResult.push(recipe);
+          }
+        }
       }
     }
   }
-  //remove duplicates
-  fullResult = Array.from(new Set(fullResult));
-  //clean up the page
-  grid.replaceChildren();
-  displayRecipes(fullResult);
+  if (fullResult.length > 0) {
+    //remove duplicates
+    fullResult = Array.from(new Set(fullResult));
+    //clean up the page
+    grid.replaceChildren();
+    displayRecipes(fullResult);
+  } else {
+    grid.replaceChildren();
+    displayRecipes(recipes);
+  }
 }
 
 async function init() {
   const { recipes } = await getData();
   displayRecipes(recipes);
   sorting(recipes);
-  menuState();
 }
+
 init();
 
 searchInput.addEventListener('input', () => {
@@ -209,5 +210,22 @@ searchInput.addEventListener('input', () => {
     document.querySelector('.tag-bar').replaceChildren();
     grid.replaceChildren();
     init();
+  }
+});
+document.addEventListener('click', (e) => {
+  const ingredientMenu = document.querySelector('#IngredientsBtn');
+  const applianceMenu = document.querySelector('#AppareilsBtn');
+  const ustensilsMenu = document.querySelector('#UstensilesBtn');
+  if (!ingredientMenu.contains(e.target)) {
+    ingredientMenu.classList.remove('active');
+    ingredientMenu.classList.remove('inputSearch');
+  }
+  if (!applianceMenu.contains(e.target)) {
+    applianceMenu.classList.remove('active');
+    applianceMenu.classList.remove('inputSearch');
+  }
+  if (!ustensilsMenu.contains(e.target)) {
+    ustensilsMenu.classList.remove('active');
+    ustensilsMenu.classList.remove('inputSearch');
   }
 });
