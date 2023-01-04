@@ -118,7 +118,7 @@ button.active .dropdownBtn, button.active.inputSearch .dropdownBtn {
 }
 button.inputSearch .options {
   display: block;
-  width: 170px;
+  width: 204px;
 }
 button.inputSearch .dropdownBtn {
   transform: rotate(-180deg);
