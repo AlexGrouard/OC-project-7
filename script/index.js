@@ -16,7 +16,7 @@ async function displayRecipes(recipes) {
     grid.appendChild(recipesCardDOM);
   });
 }
-
+// get everything from the recipes, put them into arrays clen them and send them to the display function
 async function sorting(recipes) {
   recipes.forEach((recipe) => {
     for (let i = 0; i < recipe.ingredients.length; i++) {
@@ -27,6 +27,7 @@ async function sorting(recipes) {
       ustensilsArray.push(recipe.ustensils[i].toLowerCase());
     }
   });
+  //eliminate double
   ingredientArray = Array.from(new Set(ingredientArray));
   appliancesArray = Array.from(new Set(appliancesArray));
   ustensilsArray = Array.from(new Set(ustensilsArray));
@@ -55,10 +56,10 @@ async function displayDropdown(
   // add the toggle to the button
   toggleClass('.dropdown-search', 'inputSearch');
   toggleClass('.dropdownBtn', 'active');
-
+  //first part of the autocomplete functionality
   inputListening();
 }
-
+//toggle class on the dropdown menu for multiple state
 async function toggleClass(el, name) {
   let selector = document.querySelectorAll(el);
   selector.forEach((e) => {
@@ -74,7 +75,7 @@ async function toggleClass(el, name) {
     }
   });
 }
-
+//show the element in the button
 async function show(value, id) {
   document.querySelector(`#${id}`).value = value;
   addTags(value, id);
@@ -88,7 +89,7 @@ async function init() {
 }
 
 init();
-
+//listen to the search bar
 searchInput.addEventListener('input', () => {
   if (searchInput.value.length > 2) {
     algo();
@@ -99,6 +100,7 @@ searchInput.addEventListener('input', () => {
     init();
   }
 });
+//close the dropdown menu when clicked outside
 document.addEventListener('click', (e) => {
   const ingredientMenu = document.querySelector('#IngredientsBtn');
   const applianceMenu = document.querySelector('#AppareilsBtn');
