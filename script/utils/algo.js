@@ -89,7 +89,7 @@
   }
 } */
 
-//Algo filter/every
+//Algo filter
 async function algo() {
   const value = searchInput.value;
   const { recipes } = await getData();
@@ -103,9 +103,25 @@ async function algo() {
       tagType: tag.classList[1]
     });
   }
+  //console.log(tagArray);
   recipes.forEach(function (recipe) {
-    for (let i = 0; i < tagArray.length; i++) {}
+    let recipeHasIngredient = false;
+    let recipeHasAppliances = false;
+    let recipeHasUstensils = false;
+    let recipeHasKeyword = false;
+    let tagTypeCounter = 0;
+    let tagFoundCounter = 0;
+    let tagOk = false;
+
+    console.log(recipe);
+    //fullResult = recipe.filter((el) => console.log(el));
+    tagArray.forEach(function (tag) {
+      if (recipe.appliance.toLowerCase().includes(tag.tagName.toLowerCase())) {
+        recipeHasAppliances = true;
+      }
+    });
   });
+  console.log(fullResult);
   if (fullResult.length > 0) {
     //remove duplicates
     fullResult = Array.from(new Set(fullResult));
