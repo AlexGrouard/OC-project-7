@@ -113,6 +113,7 @@ button {
   border-radius: 5px;
   border: none;
   margin-right: 20px;
+  width:204px;
   &.active, &.active.inputSearch {
     width: 667px;
     .dropdown-search {
@@ -123,7 +124,7 @@ button {
       flex-wrap: wrap;
       justify-content: space-between;
       width: 667px;
-      height: 397px;
+      height: max-content;
     }
     .dropdownBtn {
       transform: rotate(-180deg);
@@ -133,6 +134,7 @@ button {
     .options {
       display: block;
       width: 204px;
+      height: max-content;
     }
     .dropdownBtn {
       transform: rotate(-180deg);
@@ -145,6 +147,9 @@ button {
     border-radius: 0 0 5px 5px;
     color: $alternate-font-color;
     text-align: left;
+    width:calc(100% + 12px);
+    max-height: 397px;
+    //overflow-y: auto;
     div {
       width: calc(33% - 20px);
       margin-bottom: 10px;
@@ -174,6 +179,7 @@ button {
 .dropdown-visible {
   @include horizontal-flex();
   justify-content: space-between;
+  width:100%;
 
   .dropdown-search {
     background-color: transparent;

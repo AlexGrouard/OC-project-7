@@ -99,6 +99,7 @@ button {
   border-radius: 5px;
   border: none;
   margin-right: 20px;
+  width: 204px;
 }
 button.active, button.active.inputSearch {
   width: 667px;
@@ -111,7 +112,9 @@ button.active .options, button.active.inputSearch .options {
   flex-wrap: wrap;
   justify-content: space-between;
   width: 667px;
-  height: 397px;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
 }
 button.active .dropdownBtn, button.active.inputSearch .dropdownBtn {
   transform: rotate(-180deg);
@@ -119,6 +122,9 @@ button.active .dropdownBtn, button.active.inputSearch .dropdownBtn {
 button.inputSearch .options {
   display: block;
   width: 204px;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
 }
 button.inputSearch .dropdownBtn {
   transform: rotate(-180deg);
@@ -130,6 +136,8 @@ button .options {
   border-radius: 0 0 5px 5px;
   color: white;
   text-align: left;
+  width: calc(100% + 12px);
+  max-height: 397px;
 }
 button .options div {
   width: calc(33% - 20px);
@@ -162,6 +170,7 @@ button .options div {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 }
 .dropdown-visible .dropdown-search {
   background-color: transparent;

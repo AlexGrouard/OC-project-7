@@ -59,6 +59,7 @@ async function displayDropdown(
   //first part of the autocomplete functionality
   inputListening();
 }
+
 //toggle class on the dropdown menu for multiple state
 async function toggleClass(el, name) {
   let selector = document.querySelectorAll(el);
@@ -75,6 +76,7 @@ async function toggleClass(el, name) {
     }
   });
 }
+
 //show the element in the button
 async function show(value, id) {
   document.querySelector(`#${id}`).value = value;
@@ -89,6 +91,7 @@ async function init() {
 }
 
 init();
+
 //listen to the search bar
 searchInput.addEventListener('input', () => {
   if (searchInput.value.length > 2) {
