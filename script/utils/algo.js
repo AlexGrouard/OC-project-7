@@ -1,4 +1,4 @@
-async function algo() {
+/* async function algo() {
   const value = searchInput.value;
   const { recipes } = await getData();
   const tags = document.querySelectorAll('.tag');
@@ -87,9 +87,9 @@ async function algo() {
     grid.replaceChildren();
     grid.textContent = ' Aucune recette ne correspond à votre critère…';
   }
-}
+} */
 
-/* //Algo filter/every
+//Algo filter/every
 async function algo() {
   const value = searchInput.value;
   const { recipes } = await getData();
@@ -116,4 +116,4 @@ async function algo() {
     grid.replaceChildren();
     grid.textContent = ' Aucune recette ne correspond à votre critère…';
   }
-} */
+}
