@@ -120,21 +120,27 @@ button {
       width: 580px;
     }
     .options {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      display: block;
       width: 667px;
-      height: max-content;
+      min-height: 397px;
+      overflow: auto;
     }
     .dropdownBtn {
       transform: rotate(-180deg);
+    }
+    .subMenuContainer{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      width: calc(100% - 20px);
     }
   }
   &.inputSearch {
     .options {
       display: block;
       width: 204px;
-      height: max-content;
+      min-height: 397px;
+      overflow: auto;
     }
     .dropdownBtn {
       transform: rotate(-180deg);
@@ -149,7 +155,6 @@ button {
     text-align: left;
     width:calc(100% + 12px);
     max-height: 397px;
-    //overflow-y: auto;
     div {
       width: calc(33% - 20px);
       margin-bottom: 10px;

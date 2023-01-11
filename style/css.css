@@ -108,23 +108,25 @@ button.active .dropdown-search, button.active.inputSearch .dropdown-search {
   width: 580px;
 }
 button.active .options, button.active.inputSearch .options {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: block;
   width: 667px;
-  height: -webkit-max-content;
-  height: -moz-max-content;
-  height: max-content;
+  min-height: 397px;
+  overflow: auto;
 }
 button.active .dropdownBtn, button.active.inputSearch .dropdownBtn {
   transform: rotate(-180deg);
 }
+button.active .subMenuContainer, button.active.inputSearch .subMenuContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: calc(100% - 20px);
+}
 button.inputSearch .options {
   display: block;
   width: 204px;
-  height: -webkit-max-content;
-  height: -moz-max-content;
-  height: max-content;
+  min-height: 397px;
+  overflow: auto;
 }
 button.inputSearch .dropdownBtn {
   transform: rotate(-180deg);
