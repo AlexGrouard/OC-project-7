@@ -15,26 +15,27 @@ async function algo() {
 
   // go through each recipe to find a match in Ingredients, name of the recipe, appliances or utensils
   for (let recipe of recipes) {
-    let recipeHasIngredient = false;
-    let recipeHasAppliances = false;
-    let recipeHasUstensils = false;
-    let recipeHasKeyword = false;
+    let recipeHasKeyword = true;
     let tagTypeCounter = 0;
     let tagFoundCounter = 0;
-    let tagOk = false;
+    let tagOk = true;
 
     //if something is input is the research bar
     if (value) {
-      if (
-        recipe.name.toLowerCase().includes(value) ||
-        recipe.description.toLowerCase().includes(value)
-      ) {
-        recipeHasKeyword = true;
-      }
+      let keywordInIngredients = false;
       for (let ingredientArr of recipe.ingredients) {
-        if (ingredientArr.ingredient.toLowerCase().includes(value)) {
+        if (
+          ingredientArr.ingredient.toLowerCase().includes(value.toLowerCase())
+        ) {
           recipeHasKeyword = true;
         }
+      }
+      if (
+        !recipe.name.toLowerCase().includes(value.toLowerCase()) &&
+        !recipe.description.toLowerCase().includes(value.toLowerCase()) &&
+        !keywordInIngredients
+      ) {
+        recipeHasKeyword = false;
       }
     }
     // if tags is added or removed
@@ -57,7 +58,6 @@ async function algo() {
         }
       }
       if (tagArray[i].tagType === 'Utag') {
-        tagFoundCounter++;
         for (let utensilsArr of recipe.ustensils) {
           if (utensilsArr.toLowerCase().includes(tagArray[i].tagName)) {
             recipeHasUstensils = true;
@@ -66,13 +66,10 @@ async function algo() {
         }
       }
     }
-    if (tagFoundCounter === tagTypeCounter) {
-      console.log('Found');
-      tagOk = true;
+    if (tagFoundCounter !== tagTypeCounter) {
+      tagOk = false;
     }
-
-    if (tagOk || recipeHasKeyword) {
-      console.log('recette push');
+    if (tagOk && recipeHasKeyword) {
       fullResult.push(recipe);
     }
   }
