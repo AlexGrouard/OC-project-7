@@ -11,7 +11,6 @@ async function algo() {
       tagType: tag.classList[1]
     });
   }
-  console.log(tagArray);
 
   // go through each recipe to find a match in Ingredients, name of the recipe, appliances or utensils
   for (let recipe of recipes) {

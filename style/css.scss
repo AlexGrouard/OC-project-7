@@ -120,11 +120,15 @@ button {
       width: 580px;
     }
     .options {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      display: block;
       width: 667px;
-      height: max-content;
+      min-height: 397px;
+      overflow-y: auto;
+      .subMenuContainer{
+        display: flex;
+        flex-wrap: wrap;
+        width: calc(100% - 20px);
+      }
     }
     .dropdownBtn {
       transform: rotate(-180deg);
@@ -134,12 +138,15 @@ button {
     .options {
       display: block;
       width: 204px;
-      height: max-content;
+      min-height: 397px;
+      overflow: auto;
+
     }
     .dropdownBtn {
       transform: rotate(-180deg);
     }
   }
+
   .options {
     display: none;
     z-index: 1;
@@ -149,13 +156,13 @@ button {
     text-align: left;
     width:calc(100% + 12px);
     max-height: 397px;
-    //overflow-y: auto;
     div {
       width: calc(33% - 20px);
       margin-bottom: 10px;
       margin-left: 10px;
     }
   }
+
 }
 #IngredientsBtn {
   background-color: $secondary;
