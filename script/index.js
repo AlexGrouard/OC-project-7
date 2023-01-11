@@ -94,14 +94,7 @@ init();
 
 //listen to the search bar
 searchInput.addEventListener('input', () => {
-  if (searchInput.value.length > 2) {
-    algo();
-  } else {
-    document.querySelector('.button-bar').replaceChildren();
-    document.querySelector('.tag-bar').replaceChildren();
-    grid.replaceChildren();
-    init();
-  }
+  algo();
 });
 //close the dropdown menu when clicked outside
 document.addEventListener('click', (e) => {

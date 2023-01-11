@@ -21,7 +21,7 @@ async function algo() {
     let tagOk = true;
 
     //if something is input is the research bar
-    if (value) {
+    if (value && value.length > 2) {
       let keywordInIngredients = false;
       for (let ingredientArr of recipe.ingredients) {
         if (
