@@ -108,23 +108,27 @@ async function algo() {
   });
   //console.log(tagArray);
   recipes.forEach(function (recipe) {
-    /* let recipeHasKeyword = recipe.filter(function (el) {
-      recipe.name.toLowerCase() === value.toLowerCase();
-      recipe.description.toLowerCase() === value.toLowerCase();
-      recipe.ingredients.ingredient.toLowerCase() === value.toLowerCase();
-    });
-
-        recipe.ingredients.forEach(function (ingredientList) {
+    let recipeHasKeyword = false;
+    const { name, ingredients, description, appliance, ustensils } = recipe;
+    if (
+      name.toLowerCase().includes(value) ||
+      description.toLowerCase().includes(value)
+    ) {
+      recipeHasKeyword = true;
+    }
+    ingredients.forEach(function (ingredientList) {
       if (ingredientList.ingredient.toLowerCase().includes(value)) {
         recipeHasKeyword = true;
       }
-    }); */
+    });
 
     let recipeHasAppliances = tagArray.some((tag) => {
-      recipe.appliance.toLowerCase() === tag.tagName.toLowerCase();
+      /*       console.log('appliance ' + appliance.toLowerCase());
+      console.log('tag ' + tag.tagName.toLowerCase()); */
+      appliance.toLowerCase() === tag.tagName.toLowerCase();
     });
     console.log(recipeHasAppliances);
-    if (recipeHasAppliances) {
+    if (recipeHasAppliances || recipeHasKeyword) {
       fullResult.push(recipe);
     }
   });
