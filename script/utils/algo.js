@@ -1,14 +1,14 @@
 async function algo() {
   const value = searchInput.value;
   const { recipes } = await getData();
-  const tags = document.querySelectorAll('.tag');
+  const tags = document.querySelectorAll(".tag");
   let tagArray = [];
   let fullResult = [];
 
   for (let tag of tags) {
     tagArray.push({
       tagName: tag.textContent.toLowerCase(),
-      tagType: tag.classList[1]
+      tagType: tag.classList[1],
     });
   }
 
@@ -40,26 +40,23 @@ async function algo() {
     // if tags is added or removed
     for (let i = 0; i < tagArray.length; i++) {
       tagTypeCounter++;
-      if (tagArray[i].tagType === 'Itag') {
+      if (tagArray[i].tagType === "Itag") {
         for (let ingredientArr of recipe.ingredients) {
           if (
             ingredientArr.ingredient.toLowerCase().includes(tagArray[i].tagName)
           ) {
-            recipeHasIngredient = true;
             tagFoundCounter++;
           }
         }
       }
-      if (tagArray[i].tagType === 'Atag') {
+      if (tagArray[i].tagType === "Atag") {
         if (recipe.appliance.toLowerCase().includes(tagArray[i].tagName)) {
-          recipeHasAppliances = true;
           tagFoundCounter++;
         }
       }
-      if (tagArray[i].tagType === 'Utag') {
+      if (tagArray[i].tagType === "Utag") {
         for (let utensilsArr of recipe.ustensils) {
           if (utensilsArr.toLowerCase().includes(tagArray[i].tagName)) {
-            recipeHasUstensils = true;
             tagFoundCounter++;
           }
         }
@@ -81,35 +78,6 @@ async function algo() {
     displayRecipes(fullResult);
   } else {
     grid.replaceChildren();
-    grid.textContent = ' Aucune recette ne correspond à votre critère…';
+    grid.textContent = " Aucune recette ne correspond à votre critère…";
   }
 }
-
-/* //Algo filter/every
-async function algo() {
-  const value = searchInput.value;
-  const { recipes } = await getData();
-  const tags = document.querySelectorAll('.tag');
-  let tagArray = [];
-  let fullResult = [];
-
-  for (let tag of tags) {
-    tagArray.push({
-      tagName: tag.textContent.toLowerCase(),
-      tagType: tag.classList[1]
-    });
-  }
-  recipes.forEach(function (recipe) {
-    for (let i = 0; i < tagArray.length; i++) {}
-  });
-  if (fullResult.length > 0) {
-    //remove duplicates
-    fullResult = Array.from(new Set(fullResult));
-    //clean up the page
-    grid.replaceChildren();
-    displayRecipes(fullResult);
-  } else {
-    grid.replaceChildren();
-    grid.textContent = ' Aucune recette ne correspond à votre critère…';
-  }
-} */
