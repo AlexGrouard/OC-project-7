@@ -24,13 +24,10 @@ async function algo() {
     const { name, ingredients, description, appliance, ustensils } = recipe;
 
     if (value && value.length > 2) {
-      ingredients.forEach(function (ingredientList) {
-        if (
-          ingredientList.ingredient.toLowerCase().includes(value.toLowerCase())
-        ) {
-          keywordInIngredient = true;
-        }
-      });
+      keywordInIngredient = ingredients.some(
+        (ingredientList) =>
+          ingredientList.ingredient.toLowerCase() === value.toLowerCase()
+      );
       if (
         !name.toLowerCase().includes(value.toLowerCase()) &&
         !description.toLowerCase().includes(value.toLowerCase()) &&
