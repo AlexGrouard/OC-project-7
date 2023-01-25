@@ -1,78 +1,71 @@
 //Algo filter
 async function algo() {
-  const value = searchInput.value;
-  const { recipes } = await getData();
-  const tags = document.querySelectorAll(".tag");
-  let tagArray = [];
-  let fullResult = [];
-  let tagTypeCounter = 0;
+  const value = searchInput.value
+  const { recipes } = await getData()
+  const tags = document.querySelectorAll(".tag")
+  let tagArray = []
+  let fullResult = []
+
   tags.forEach((tag) => {
-    tagTypeCounter++;
     tagArray.push({
       tagName: tag.textContent.toLowerCase(),
       tagType: tag.classList[1],
-    });
-  });
+    })
+  })
+
   recipes.forEach(function (recipe) {
-    let recipeHasKeyword = true;
-    let tagOK = true;
-    let keywordInIngredient = false;
-    let recipeHasUstensils;
-    let recipeHasIngredient;
-    let tagFoundCounter = 0;
+    let recipeHasKeyword = true
+    let tagOK = true
+    const { name, ingredients, description, appliance, ustensils } = recipe
 
-    const { name, ingredients, description, appliance, ustensils } = recipe;
-
+    //verify if the keyword enter is present in the recipe and is longer than 2 character
     if (value && value.length > 2) {
-      keywordInIngredient = ingredients.some(
-        (ingredientList) =>
-          ingredientList.ingredient.toLowerCase() === value.toLowerCase()
-      );
       if (
         !name.toLowerCase().includes(value.toLowerCase()) &&
         !description.toLowerCase().includes(value.toLowerCase()) &&
-        !keywordInIngredient
+        !ingredients.find((ingredient) =>
+          ingredient.ingredient.toLowerCase().includes(value.toLowerCase())
+        )
       ) {
-        recipeHasKeyword = false;
+        recipeHasKeyword = false
       }
     }
 
     tagArray.forEach((tag) => {
-      if (tag.tagType === "Atag") {
-        if (tag.tagName.toLowerCase() === appliance.toLowerCase()) {
-          tagFoundCounter++;
-        }
-      } else {
-        recipeHasUstensils = ustensils.some(
-          (ustensilsList) =>
-            ustensilsList.toLowerCase() === tag.tagName.toLowerCase()
-        );
-        recipeHasIngredient = ingredients.some(
-          (ingredientList) =>
-            ingredientList.ingredient.toLowerCase() ===
-            tag.tagName.toLowerCase()
-        );
-        if (recipeHasUstensils || recipeHasIngredient) {
-          tagFoundCounter++;
-        }
-      }
-    });
+      let recipeHasAppliance
+      tag.tagType === "Atag" &&
+      tag.tagName.toLowerCase().includes(appliance.toLowerCase())
+        ? (recipeHasAppliance = true)
+        : (recipeHasAppliance = false)
 
-    if (tagFoundCounter != tagTypeCounter) {
-      tagOK = false;
+      const recipeHasUstensils = ustensils.some(
+        (ustensilsList) =>
+          tag.tagType === "Utag" &&
+          ustensilsList.toLowerCase() === tag.tagName.toLowerCase()
+      )
+      const recipeHasIngredient = ingredients.some(
+        (ingredientList) =>
+          tag.tagType === "Itag" &&
+          ingredientList.ingredient.toLowerCase() === tag.tagName.toLowerCase()
+      )
+      if (!recipeHasAppliance && !recipeHasUstensils && !recipeHasIngredient) {
+        tagOK = false
+      }
+    })
+
+    if (recipeHasKeyword && tagOK) {
+      fullResult.push(recipe)
     }
-    if (tagOK && recipeHasKeyword) {
-      fullResult.push(recipe);
-    }
-  });
+  })
+  //display theresults
   if (fullResult.length > 0) {
     //remove duplicates
-    fullResult = Array.from(new Set(fullResult));
+    fullResult = Array.from(new Set(fullResult))
     //clean up the page
-    grid.replaceChildren();
-    displayRecipes(fullResult);
+    grid.replaceChildren()
+    displayRecipes(fullResult)
   } else {
-    grid.replaceChildren();
-    grid.textContent = " Aucune recette ne correspond à votre critère…";
+    grid.replaceChildren()
+    grid.textContent = " Aucune recette ne correspond à votre critère…"
   }
 }
