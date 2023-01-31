@@ -107,7 +107,7 @@ init()
 //listen to the search bar
 searchInput.addEventListener("input", () => {
   algo()
-  inputAutoComplete(searchValue, fullArray)
+  inputAutoComplete(searchInput.value, fullArray)
 })
 //close the dropdown menu when clicked outside
 document.addEventListener("click", (e) => {
