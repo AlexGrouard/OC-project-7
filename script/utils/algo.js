@@ -61,6 +61,7 @@ async function algo() {
   if (fullResult.length > 0) {
     //remove duplicates
     fullResult = Array.from(new Set(fullResult))
+    inputAutoComplete(fullResult)
     //clean up the page
     grid.replaceChildren()
     displayRecipes(fullResult)
