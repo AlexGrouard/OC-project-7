@@ -80,5 +80,7 @@ async function algo() {
   } else {
     grid.replaceChildren()
     grid.textContent = " Aucune recette ne correspond à votre critère…"
+    fullResult = []
+    inputAutoComplete(fullResult)
   }
 }

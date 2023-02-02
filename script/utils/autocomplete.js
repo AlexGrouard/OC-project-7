@@ -46,6 +46,7 @@ function autoComplete(
 }
 
 function inputAutoComplete(searchResult) {
+  console.log(searchResult)
   const buttonBar = document.querySelector(".button-bar")
 
   const ingredientArray = []
@@ -66,11 +67,16 @@ function inputAutoComplete(searchResult) {
     appliancesArray.push(recipe.appliance)
     recipe.ustensils.forEach((i) => ustensilsArray.push(i))
   })
-
-  Ioptions.remove()
-  submenuDOM(Ibutton, ingredientArray, "Ingredients")
-  Aoptions.remove()
-  submenuDOM(Abutton, appliancesArray, "Appareils")
-  Uoptions.remove()
-  submenuDOM(Ubutton, ustensilsArray, "Ustensiles")
+  if (searchResult.lengh < 1) {
+    Ioptions.remove()
+    Aoptions.remove()
+    Uoptions.remove()
+  } else {
+    Ioptions.remove()
+    submenuDOM(Ibutton, ingredientArray, "Ingredients")
+    Aoptions.remove()
+    submenuDOM(Abutton, appliancesArray, "Appareils")
+    Uoptions.remove()
+    submenuDOM(Ubutton, ustensilsArray, "Ustensiles")
+  }
 }
