@@ -22,26 +22,13 @@ async function sorting(recipes) {
   recipes.forEach((recipe) => {
     recipe.ingredients.forEach((ingredientList) => {
       ingredientArray.push(ingredientList.ingredient.toLowerCase())
-      fullArray.push({
-        id: "Ingredients",
-        element: ingredientList.ingredient.toLowerCase(),
-      })
     })
     appliancesArray.push(recipe.appliance.toLowerCase())
-    fullArray.push({
-      id: "Appareils",
-      element: recipe.appliance.toLowerCase(),
-    })
     recipe.ustensils.forEach((ustensilsList) => {
       ustensilsArray.push(ustensilsList.toLowerCase())
-      fullArray.push({
-        id: "Ustensiles",
-        element: ustensilsList.toLowerCase(),
-      })
     })
   })
   //eliminate double
-  fullArray = Array.from(new Set(fullArray))
   ingredientArray = Array.from(new Set(ingredientArray))
   appliancesArray = Array.from(new Set(appliancesArray))
   ustensilsArray = Array.from(new Set(ustensilsArray))
@@ -107,7 +94,6 @@ init()
 //listen to the search bar
 searchInput.addEventListener("input", () => {
   algo()
-  inputAutoComplete(searchInput.value, fullArray)
 })
 //close the dropdown menu when clicked outside
 document.addEventListener("click", (e) => {

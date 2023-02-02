@@ -45,20 +45,32 @@ function autoComplete(
   }
 }
 
-function inputAutoComplete(searchValue, fullArray) {
-  const value = searchValue.toLowerCase()
-  const regex = new RegExp(`${value}`)
+function inputAutoComplete(searchResult) {
+  const buttonBar = document.querySelector(".button-bar")
 
-  fullArray.forEach((el) => {
-    let matching = el.element.match(regex)
-    if (matching) {
-      autoComplete(
-        value,
-        el.id,
-        ingredientArray,
-        appliancesArray,
-        ustensilsArray
-      )
-    }
+  const ingredientArray = []
+  const appliancesArray = []
+  const ustensilsArray = []
+
+  const Ibutton = buttonBar.querySelector("#IngredientsBtn")
+  const Ioptions = Ibutton.querySelector(".options")
+
+  const Abutton = buttonBar.querySelector("#AppareilsBtn")
+  const Aoptions = Abutton.querySelector(".options")
+
+  const Ubutton = buttonBar.querySelector("#UstensilesBtn")
+  const Uoptions = Ubutton.querySelector(".options")
+
+  searchResult.forEach((recipe) => {
+    recipe.ingredients.forEach((i) => ingredientArray.push(i.ingredient))
+    appliancesArray.push(recipe.appliance)
+    recipe.ustensils.forEach((i) => ustensilsArray.push(i))
   })
+
+  Ioptions.remove()
+  submenuDOM(Ibutton, ingredientArray, "Ingredients")
+  Aoptions.remove()
+  submenuDOM(Abutton, appliancesArray, "Appareils")
+  Uoptions.remove()
+  submenuDOM(Ubutton, ustensilsArray, "Ustensiles")
 }
