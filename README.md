@@ -1,12 +1,12 @@
-## Project Petits Plats
+# Project Petits Plats
 
-#Introduction 
+## Introduction 
 
 Project n°7 on my Front-end Dev curiculum with OpenClassrooms
 
 This project goal was to familirize myself algorithms.
 
-#Prompt of the project
+## Prompt of the project
 
 A small business as decide to launch a recipe website like 750g or Marmiton
 
